@@ -26,14 +26,6 @@ export default class Deck {
     }
   }
 
-  printCards() {
-    let output: string = "";
-    for (let i = 0; i < this.cards.length; i++) {
-      output = output + `${i}: ${this.cards[i]}\n`;
-    }
-    console.log(output);
-  }
-
   shuffle() {
     const clonedCards = cloneDeep(this.cards);
     const newCards: Card[] = [];
@@ -47,5 +39,38 @@ export default class Deck {
     }
 
     this.cards = newCards;
+  }
+
+  dealStockpiles(numberOfPlayers: number): Card[][] {
+    function determineNumberOfCardsPerPlayer(numberOfPlayers: number) {
+      if (numberOfPlayers < 5) {
+        return 30;
+      } else {
+        return 20;
+      }
+    }
+
+    if (numberOfPlayers < 2 || numberOfPlayers > 6) {
+      throw new Error("Select 2-6 players");
+    }
+
+    this.shuffle();
+
+    const stockPiles: Card[][] = [];
+    for (let i = 0; i < numberOfPlayers; i++) {
+      stockPiles[i] = [];
+    }
+
+    const numberOfCardsToDeal: number =
+      numberOfPlayers * determineNumberOfCardsPerPlayer(numberOfPlayers);
+
+    for (let i = 0; i < numberOfCardsToDeal; i++) {
+      const playerToDealToIndex = i % numberOfPlayers;
+      stockPiles[playerToDealToIndex].push(this.cards[i]);
+    }
+
+    this.cards.splice(0, numberOfCardsToDeal);
+
+    return stockPiles;
   }
 }
