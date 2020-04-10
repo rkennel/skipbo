@@ -1,4 +1,5 @@
 import { Card } from "./Card";
+import { cloneDeep } from "lodash";
 
 export default class Deck {
   cards: Card[] = [];
@@ -23,5 +24,28 @@ export default class Deck {
     for (let i = 0; i < numberOfCards; i++) {
       this.cards.push(cardType);
     }
+  }
+
+  printCards() {
+    let output: string = "";
+    for (let i = 0; i < this.cards.length; i++) {
+      output = output + `${i}: ${this.cards[i]}\n`;
+    }
+    console.log(output);
+  }
+
+  shuffle() {
+    const clonedCards = cloneDeep(this.cards);
+    const newCards: Card[] = [];
+
+    while (clonedCards.length > 0) {
+      const randomIndex: number = Math.floor(
+        Math.random() * clonedCards.length
+      );
+      newCards.push(clonedCards[randomIndex]);
+      clonedCards.splice(randomIndex, 1);
+    }
+
+    this.cards = newCards;
   }
 }

@@ -14,6 +14,9 @@
   "author": "Ryan Kennel",
   "license": "MIT",
   "dependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.11.1",
+    "lodash": "^4.17.15",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
