@@ -1,5 +1,5 @@
-describe("First Jest test",()=>{
-   it("Basic Addition",()=>{
-       expect(2+2).toEqual(4);
-   });
+describe("First Jest test", () => {
+  it("Basic Addition", () => {
+    expect(2 + 2).toEqual(4);
+  });
 });
