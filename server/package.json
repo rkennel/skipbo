@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest"
+    "test:unit": "jest src/unit/**/*.test.ts"
   },
   "repository": {
     "type": "git",
