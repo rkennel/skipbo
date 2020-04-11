@@ -3,8 +3,52 @@ import Player from "../../main/gameplay/Player";
 
 describe("Playing the game", () => {
 
-    describe("adding and removing players from the game", () => {
+    describe("Game Identifier", () => {
 
+        it("Generates a unique identifier", () => {
+            const game = new Game();
+            expect(game.id).toBeDefined();
+        });
+
+        it("The identifier is 8 characters long", () => {
+            const game = new Game();
+            expect(game.id.length).toEqual(8);
+        });
+
+        it("Generates a new id each time", () => {
+            const games = [
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game(),
+                new Game()
+            ];
+
+            validateEachIdWasCreatedOnlyOnce();
+
+            function validateEachIdWasCreatedOnlyOnce() {
+                for (let i = 0; i < games.length; i++) {
+                    let count = 0;
+                    for (let j = 0; j < games.length; j++) {
+                        if (games[i].id === games[j].id) {
+                            count++;
+                        }
+                    }
+
+                    expect(count).toEqual(1);
+                }
+            }
+        });
+
+
+    })
+
+    describe("adding and removing players from the game", () => {
 
         describe("Active Players", () => {
 
@@ -74,55 +118,55 @@ describe("Playing the game", () => {
         });
 
         describe("Spectators", () => {
-          it("If player already a spectator is added then there is no effect", () => {
-            const game = new Game();
-            const player = new Player("Hastings");
+            it("If player already a spectator is added then there is no effect", () => {
+                const game = new Game();
+                const player = new Player("Hastings");
 
-            game.addSpectator(player);
-            game.addSpectator(player);
+                game.addSpectator(player);
+                game.addSpectator(player);
 
-            expect(game.spectators.length).toEqual(1);
-            expect(game.spectators.includes(player)).toBe(true);
-          });
+                expect(game.spectators.length).toEqual(1);
+                expect(game.spectators.includes(player)).toBe(true);
+            });
 
-          it("If player was in the game then remove player from the game", () => {
-            const game = new Game();
-            const player = new Player("Hastings");
+            it("If player was in the game then remove player from the game", () => {
+                const game = new Game();
+                const player = new Player("Hastings");
 
-            game.addPlayer(player);
-            game.addSpectator(player);
+                game.addPlayer(player);
+                game.addSpectator(player);
 
-            expect(game.spectators.length).toEqual(1);
-            expect(game.spectators.includes(player)).toBe(true);
-            expect(game.players.length).toEqual(0);
-            expect(game.players.includes(player)).toBe(false);
-          });
+                expect(game.spectators.length).toEqual(1);
+                expect(game.spectators.includes(player)).toBe(true);
+                expect(game.players.length).toEqual(0);
+                expect(game.players.includes(player)).toBe(false);
+            });
 
-          it("Removing spectator results in the player no longer being in the spectator group", () => {
-            const game = new Game();
-            const player = new Player("Hastings");
+            it("Removing spectator results in the player no longer being in the spectator group", () => {
+                const game = new Game();
+                const player = new Player("Hastings");
 
-            game.addSpectator(player);
-            game.removeSpectator(player);
+                game.addSpectator(player);
+                game.removeSpectator(player);
 
-            expect(game.spectators.length).toEqual(0);
-            expect(game.spectators.includes(player)).toBe(false);
-          });
+                expect(game.spectators.length).toEqual(0);
+                expect(game.spectators.includes(player)).toBe(false);
+            });
 
-          it("Removing spectator not spectating has no effect", () => {
-            const game = new Game();
-            const player = new Player("Laimbeer");
-            const player2 = new Player("Hastings");
+            it("Removing spectator not spectating has no effect", () => {
+                const game = new Game();
+                const player = new Player("Laimbeer");
+                const player2 = new Player("Hastings");
 
-            game.addPlayer(player);
-            game.addSpectator(player2);
+                game.addPlayer(player);
+                game.addSpectator(player2);
 
-            game.removeSpectator(player);
+                game.removeSpectator(player);
 
-            expect(game.spectators.length).toEqual(1);
-            expect(game.spectators.includes(player)).toBe(false);
-            expect(game.spectators.includes(player2)).toBe(true);
-          });
+                expect(game.spectators.length).toEqual(1);
+                expect(game.spectators.includes(player)).toBe(false);
+                expect(game.spectators.includes(player2)).toBe(true);
+            });
 
         });
 

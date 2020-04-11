@@ -1,11 +1,12 @@
 {
   "name": "skipbo-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project to learn TypeScript and Websockets using Mattel's popular card game as a learning medium.  Skip-Bo is a registered trademark of Mattel and a lot of fun to play.  To purchase, go to: https://www.mattelgames.com/en-us/cards/skip-bo",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./src/**/*.ts --fix",
-    "test:unit": "jest src/unit/**/*.test.ts"
+    "test:unit": "jest src/unit/**/*.test.ts",
+    "serve:desktop": "node ./src/main/server.ts"
   },
   "repository": {
     "type": "git",
@@ -14,17 +15,18 @@
   "author": "Ryan Kennel",
   "license": "MIT",
   "dependencies": {
-    "@types/lodash": "^4.14.149",
-    "@types/node": "^13.11.1",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.6",
     "@types/jest": "^25.2.1",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.11.1",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "eslint": "^6.8.0",
-    "prettier": "^1.19.1",
     "eslint-config-prettier": "^6.10.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
@@ -33,6 +35,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.3.0",
+    "prettier": "^1.19.1",
     "ts-jest": "^25.3.1"
   }
 }
