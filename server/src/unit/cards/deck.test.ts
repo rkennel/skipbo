@@ -2,25 +2,6 @@ import Deck from "../../main/cards/Deck";
 import { Card } from "../../main/cards/Card";
 import { cloneDeep } from "lodash";
 
-function numberOfCards(deck: Deck, cardType: Card) {
-  let count = 0;
-  for (let card of deck.cards) {
-    if (card === cardType) {
-      count++;
-    }
-  }
-
-  return count;
-}
-
-function sideBySideComparison(deck1: Deck, deck2: Deck) {
-  let output: string = "";
-  for (let i = 0; i < deck1.cards.length; i++) {
-    output = output + `${i}: ${deck1.cards[i]} ${deck2.cards[i]}\n`;
-  }
-  console.log(output);
-}
-
 describe("Card Deck Functionality", () => {
   describe("Fresh deck", () => {
     const deck: Deck = new Deck();
@@ -39,7 +20,7 @@ describe("Card Deck Functionality", () => {
     });
   });
 
-  describe("Dealing cards to players", () => {
+  describe("Dealing stockpile cards to players", () => {
     describe("Validating the number of players", () => {
       it("does not allow one player", () => {
         const deck: Deck = new Deck();
@@ -256,6 +237,49 @@ describe("Card Deck Functionality", () => {
       });
     });
   });
+
+  describe("Grab the next Card",()=>{
+
+    it("provides the next card in the pile",()=>{
+      const deck:Deck = new Deck();
+      deck.dealStockpiles(6);
+
+      const expectedCard = deck.cards[0];
+      const actualCard = deck.dealNextCard();
+
+      expect(actualCard).toEqual(expectedCard);
+    });
+
+    it("Provides an accurate count of cards remaining",()=>{
+      const deck:Deck = new Deck();
+      deck.dealStockpiles(6);
+
+      const numberOfCards = deck.cards.length;
+      deck.dealNextCard();
+
+      expect(deck.numberOfCardsRemaining()).toEqual(numberOfCards-1);
+    });
+
+    describe("After dealing next card, full deck remains",()=>{
+      const deck:Deck = new Deck();
+      const playersHands = deck.dealStockpiles(6);
+
+      const card = deck.dealNextCard();
+      playersHands[0].push(card);
+
+      validateAllCards(combineDeckAndPlayersHands(deck,playersHands));
+    });
+
+    describe("If no cards remain, then it throws an exception",()=>{
+      const deck:Deck = new Deck();
+      deck.cards=[];
+
+      expect(()=>{deck.dealNextCard()}).toThrow(new Error("Deck is out of cards"));
+    })
+
+
+  });
+
 });
 
 function combineDeckAndPlayersHands(

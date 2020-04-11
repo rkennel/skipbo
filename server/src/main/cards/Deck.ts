@@ -73,4 +73,21 @@ export default class Deck {
 
     return stockPiles;
   }
+
+  dealNextCard():Card {
+
+    if(this.cards.length===0){
+      throw new Error("Deck is out of cards");
+    }
+
+    const card:Card = this.cards[0];
+
+    this.cards.splice(0,1);
+
+    return card;
+  }
+
+  numberOfCardsRemaining():number {
+    return this.cards.length;
+  }
 }
