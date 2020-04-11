@@ -1,12 +1,9 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
+import supertest, { Response } from "supertest";
 
 const server: SkipBoServer = new SkipBoServer();
 
 describe("Instantiating Server", () => {
-  test("App should be undefined", () => {
-    expect(server.app).toBeUndefined();
-  });
-
   test("Server should be undefined", () => {
     expect(server.server).toBeUndefined();
   });
@@ -21,20 +18,22 @@ describe("Starting Server functions", () => {
     server.stop();
   });
 
-  test("After Server has started, the class exposes the app property", () => {
-    expect(server.app).toBeDefined();
-  });
-
   test("After Server has started, the class exposes the server property", () => {
     expect(server.server).toBeDefined();
   });
 
   test("If Server is already running, then start will not do anything", () => {
-    const spy = jest.spyOn(server.app, "listen");
+    const spy = jest.spyOn(server.server, "listen");
 
     server.start();
 
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  test("health page returns response", async () => {
+    const response: Response = await supertest(server.server).get("/health");
+    expect(response.status).toEqual(200);
+    expect(response.body).toEqual("SkipBo Server is up and running");
   });
 });
 
@@ -53,23 +52,14 @@ describe("Stopping Server functions", () => {
     server.stop();
 
     expect(spy).toHaveBeenCalled();
-    expect(server.server.listening).toBe(false);
+    expect(server.isListening()).toBe(false);
   });
 
   test("I can start a server after it has been closed", () => {
     server.stop();
     server.start();
 
-    expect(server.server.listening).toBe(true);
-  });
-
-  test("If the server has been started before it will not create a new app", () => {
-    const app1 = server.app;
-    server.stop();
-    server.start();
-    const app2 = server.app;
-
-    expect(app1).toBe(app2);
+    expect(server.isListening()).toBe(true);
   });
 
   test("If the server has been started before it will not create a new server", () => {
@@ -85,6 +75,6 @@ describe("Stopping Server functions", () => {
     server.stop();
     server.start();
 
-    expect(server.server.listening).toBe(true);
+    expect(server.isListening()).toBe(true);
   });
 });
