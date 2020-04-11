@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./src/**/*.ts --fix",
     "test:unit": "jest src/unit/**/*.test.ts",
-    "serve:desktop": "node ./src/main/server.ts"
+    "serve:desktop": "node src/main/server/SkipBoServer.ts"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.3.0",
     "prettier": "^1.19.1",
+    "supertest": "^4.0.2",
     "ts-jest": "^25.3.1"
   }
 }

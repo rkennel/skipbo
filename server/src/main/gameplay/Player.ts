@@ -1,7 +1,6 @@
 import { Card } from "./Card";
 
 export default class Player {
-
   name: string;
 
   stockpile: Card[] = [];
@@ -13,5 +12,4 @@ export default class Player {
   constructor(name: string) {
     this.name = name;
   }
-
 }

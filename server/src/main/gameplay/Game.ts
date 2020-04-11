@@ -4,8 +4,8 @@ import { Card } from "./Card";
 import { isEqual } from "lodash";
 
 export default class Game {
-  players: Player[]=[];
-  spectators: Player[]=[];
+  players: Player[] = [];
+  spectators: Player[] = [];
   deck: Deck = new Deck();
   buildingPiles: Card[][] = [[], [], [], []];
   id: string;
@@ -14,50 +14,54 @@ export default class Game {
     this.id = this.generateUniqueId();
   }
 
-  private generateUniqueId():string {
+  private generateUniqueId(): string {
     const availableCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-    let id="";
-    for(let i=0;i<8;i++){
+    let id = "";
+    for (let i = 0; i < 8; i++) {
       const randomIndex: number = Math.floor(
-          Math.random() * availableCharacters.length
+        Math.random() * availableCharacters.length
       );
 
-      id=id+availableCharacters.charAt(randomIndex);
+      id = id + availableCharacters.charAt(randomIndex);
     }
 
     return id;
   }
 
-  addPlayer(player: Player):void {
-    if(this.players.length>=6){
+  addPlayer(player: Player): void {
+    if (this.players.length >= 6) {
       throw new Error("Maximum of 6 players is allowed");
     }
 
-    this.addPerson(player,this.players,this.spectators);
+    this.addPerson(player, this.players, this.spectators);
   }
 
-  private addPerson(player: Player, players: Player[], playersToRemoveFrom: Player[]) {
+  private addPerson(
+    player: Player,
+    players: Player[],
+    playersToRemoveFrom: Player[]
+  ) {
     if (!players.includes(player)) {
       players.push(player);
-      this.removePerson(player,playersToRemoveFrom);
+      this.removePerson(player, playersToRemoveFrom);
     }
   }
 
-  removePlayer(player: Player):void {
-    this.removePerson(player,this.players);
+  removePlayer(player: Player): void {
+    this.removePerson(player, this.players);
   }
 
-  private removePerson(player:Player, players:Player[]){
+  private removePerson(player: Player, players: Player[]) {
     const index = this.findPlayerIndex(player, players);
-    if(index>-1){
-      players.splice(index,1);
+    if (index > -1) {
+      players.splice(index, 1);
     }
   }
 
-  private findPlayerIndex(player: Player, players: Player[]):number {
-    for(let i=0;i<players.length;i++){
-      if(isEqual(player,players[i])){
+  private findPlayerIndex(player: Player, players: Player[]): number {
+    for (let i = 0; i < players.length; i++) {
+      if (isEqual(player, players[i])) {
         return i;
       }
     }
@@ -65,12 +69,12 @@ export default class Game {
     return -1;
   }
 
-  addSpectator(player: Player):void{
-    this.addPerson(player,this.spectators,this.players);
+  addSpectator(player: Player): void {
+    this.addPerson(player, this.spectators, this.players);
   }
 
   removeSpectator(player: Player) {
-    this.removePerson(player,this.spectators);
+    this.removePerson(player, this.spectators);
   }
 
   start() {
@@ -89,5 +93,4 @@ export default class Game {
 
     return output;
   }
-
 }
