@@ -1,5 +1,6 @@
 import GameController from "../game/GameController";
 import EntityController from "../server/EntityController";
+import Entity from "./Entity";
 
 export default class EntityControllerFactory {
 

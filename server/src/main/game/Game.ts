@@ -2,6 +2,7 @@ import Player from "../gameplay/Player";
 import Deck from "../gameplay/Deck";
 import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";
+import Entity from "../common/Entity";
 
 export default class Game implements Entity {
   players: Player[] = [];
@@ -9,10 +10,12 @@ export default class Game implements Entity {
   deck: Deck = new Deck();
   buildingPiles: Card[][] = [[], [], [], []];
   id: string;
+  name: string = "game";
 
   constructor() {
     this.id = this.generateUniqueId();
   }
+
 
   private generateUniqueId(): string {
     const availableCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
