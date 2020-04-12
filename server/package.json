@@ -15,9 +15,11 @@
   "author": "Ryan Kennel",
   "license": "MIT",
   "dependencies": {
+    "@types/statuses": "^1.5.0",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
     "restify": "^8.5.1",
+    "statuses": "^1.5.0",
     "typescript": "^3.8.3"
   },
   "devDependencies": {

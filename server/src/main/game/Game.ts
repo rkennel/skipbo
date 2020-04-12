@@ -1,9 +1,9 @@
-import Player from "./Player";
-import Deck from "./Deck";
-import { Card } from "./Card";
+import Player from "../gameplay/Player";
+import Deck from "../gameplay/Deck";
+import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";
 
-export default class Game {
+export default class Game implements Entity {
   players: Player[] = [];
   spectators: Player[] = [];
   deck: Deck = new Deck();

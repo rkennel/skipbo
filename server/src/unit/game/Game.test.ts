@@ -1,4 +1,4 @@
-import Game from "../../main/gameplay/Game";
+import Game from "../../main/game/Game";
 import Player from "../../main/gameplay/Player";
 
 describe("Playing the game", () => {

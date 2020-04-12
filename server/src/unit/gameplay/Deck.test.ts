@@ -9,7 +9,7 @@ describe("Card Deck Functionality", () => {
   });
 
   describe("Shuffling a deck", () => {
-    it("The gameplay should be in a different order than they previously were", () => {
+    it("The deck should be in a different order than they previously were", () => {
       const deck: Deck = new Deck();
 
       const deckBefore = cloneDeep(deck);
@@ -20,7 +20,7 @@ describe("Card Deck Functionality", () => {
     });
   });
 
-  describe("Dealing stockpile gameplay to players", () => {
+  describe("Dealing stockpile to players", () => {
     describe("Validating the number of players", () => {
       it("does not allow one player", () => {
         const deck: Deck = new Deck();
@@ -43,27 +43,27 @@ describe("Card Deck Functionality", () => {
 
       const playersHands: Card[][] = deck.dealStockpiles(2);
 
-      it("Shuffles the gameplay", () => {
+      it("Shuffles the deck", () => {
         expect(shuffleSpy).toHaveBeenCalled();
       });
 
-      it("Deals gameplay for two players", () => {
+      it("Deals stockpile for two players", () => {
         expect(playersHands.length).toEqual(2);
       });
 
-      it("Player 1 gets 30 gameplay", () => {
+      it("Player 1 gets 30 cards", () => {
         expect(playersHands[0].length).toEqual(30);
       });
 
-      it("Player 2 gets 30 gameplay", () => {
+      it("Player 2 gets 30 cards", () => {
         expect(playersHands[1].length).toEqual(30);
       });
 
-      it("The deck only has 102 gameplay left", () => {
+      it("The deck only has 102 cards left", () => {
         expect(deck.cards.length).toEqual(102);
       });
 
-      describe("Combined gameplay across players stock pile and deck is 162 12 of each number card and 18 skip-bo gameplay", () => {
+      describe("Combined cards across players stock pile and deck is 162 12 of each number card and 18 skip-bo gameplay", () => {
         const allCards: Card[] = combineDeckAndPlayersHands(deck, playersHands);
         validateAllCards(allCards);
       });
@@ -75,31 +75,31 @@ describe("Card Deck Functionality", () => {
 
       const playersHands: Card[][] = deck.dealStockpiles(3);
 
-      it("Shuffles the gameplay", () => {
+      it("Shuffles the cards", () => {
         expect(shuffleSpy).toHaveBeenCalled();
       });
 
-      it("Deals gameplay for three players", () => {
+      it("Deals cards for three players", () => {
         expect(playersHands.length).toEqual(3);
       });
 
-      it("Player 1 gets 30 gameplay", () => {
+      it("Player 1 gets 30 cards", () => {
         expect(playersHands[0].length).toEqual(30);
       });
 
-      it("Player 2 gets 30 gameplay", () => {
+      it("Player 2 gets 30 cards", () => {
         expect(playersHands[1].length).toEqual(30);
       });
 
-      it("Player 3 gets 30 gameplay", () => {
+      it("Player 3 gets 30 cards", () => {
         expect(playersHands[2].length).toEqual(30);
       });
 
-      it("The deck only has 72 gameplay left", () => {
+      it("The deck only has 72 cards left", () => {
         expect(deck.cards.length).toEqual(72);
       });
 
-      describe("Combined gameplay across players stock pile and deck is 162 12 of each number card and 18 skip-bo gameplay", () => {
+      describe("Combined cards across players stock pile and deck is 162 12 of each number card and 18 skip-bo cards", () => {
         const allCards: Card[] = combineDeckAndPlayersHands(deck, playersHands);
         validateAllCards(allCards);
       });
@@ -111,35 +111,35 @@ describe("Card Deck Functionality", () => {
 
       const playersHands: Card[][] = deck.dealStockpiles(4);
 
-      it("Shuffles the gameplay", () => {
+      it("Shuffles the cards", () => {
         expect(shuffleSpy).toHaveBeenCalled();
       });
 
-      it("Deals gameplay for four players", () => {
+      it("Deals cards for four players", () => {
         expect(playersHands.length).toEqual(4);
       });
 
-      it("Player 1 gets 30 gameplay", () => {
+      it("Player 1 gets 30 cards", () => {
         expect(playersHands[0].length).toEqual(30);
       });
 
-      it("Player 2 gets 30 gameplay", () => {
+      it("Player 2 gets 30 cards", () => {
         expect(playersHands[1].length).toEqual(30);
       });
 
-      it("Player 3 gets 30 gameplay", () => {
+      it("Player 3 gets 30 cards", () => {
         expect(playersHands[2].length).toEqual(30);
       });
 
-      it("Player 4 gets 30 gameplay", () => {
+      it("Player 4 gets 30 cards", () => {
         expect(playersHands[3].length).toEqual(30);
       });
 
-      it("The deck only has 72 gameplay left", () => {
+      it("The deck only has 72 cards left", () => {
         expect(deck.cards.length).toEqual(42);
       });
 
-      describe("Combined gameplay across players stock pile and deck is 162 12 of each number card and 18 skip-bo gameplay", () => {
+      describe("Combined cards across players stock pile and deck is 162 12 of each number card and 18 skip-bo cards", () => {
         const allCards: Card[] = combineDeckAndPlayersHands(deck, playersHands);
         validateAllCards(allCards);
       });
@@ -151,39 +151,39 @@ describe("Card Deck Functionality", () => {
 
       const playersHands: Card[][] = deck.dealStockpiles(5);
 
-      it("Shuffles the gameplay", () => {
+      it("Shuffles the cards", () => {
         expect(shuffleSpy).toHaveBeenCalled();
       });
 
-      it("Deals gameplay for five players", () => {
+      it("Deals cards for five players", () => {
         expect(playersHands.length).toEqual(5);
       });
 
-      it("Player 1 gets 20 gameplay", () => {
+      it("Player 1 gets 20 cards", () => {
         expect(playersHands[0].length).toEqual(20);
       });
 
-      it("Player 2 gets 20 gameplay", () => {
+      it("Player 2 gets 20 cards", () => {
         expect(playersHands[1].length).toEqual(20);
       });
 
-      it("Player 3 gets 20 gameplay", () => {
+      it("Player 3 gets 20 cards", () => {
         expect(playersHands[2].length).toEqual(20);
       });
 
-      it("Player 4 gets 20 gameplay", () => {
+      it("Player 4 gets 20 cards", () => {
         expect(playersHands[3].length).toEqual(20);
       });
 
-      it("Player 5 gets 20 gameplay", () => {
+      it("Player 5 gets 20 cards", () => {
         expect(playersHands[4].length).toEqual(20);
       });
 
-      it("The deck only has 62 gameplay left", () => {
+      it("The deck only has 62 cards left", () => {
         expect(deck.cards.length).toEqual(62);
       });
 
-      describe("Combined gameplay across players stock pile and deck is 162 12 of each number card and 18 skip-bo gameplay", () => {
+      describe("Combined cards across players stock pile and deck is 162 12 of each number card and 18 skip-bo cards", () => {
         const allCards: Card[] = combineDeckAndPlayersHands(deck, playersHands);
         validateAllCards(allCards);
       });
@@ -195,43 +195,43 @@ describe("Card Deck Functionality", () => {
 
       const playersHands: Card[][] = deck.dealStockpiles(6);
 
-      it("Shuffles the gameplay", () => {
+      it("Shuffles the cards", () => {
         expect(shuffleSpy).toHaveBeenCalled();
       });
 
-      it("Deals gameplay for six players", () => {
+      it("Deals cards for six players", () => {
         expect(playersHands.length).toEqual(6);
       });
 
-      it("Player 1 gets 20 gameplay", () => {
+      it("Player 1 gets 20 cards", () => {
         expect(playersHands[0].length).toEqual(20);
       });
 
-      it("Player 2 gets 20 gameplay", () => {
+      it("Player 2 gets 20 cards", () => {
         expect(playersHands[1].length).toEqual(20);
       });
 
-      it("Player 3 gets 20 gameplay", () => {
+      it("Player 3 gets 20 cards", () => {
         expect(playersHands[2].length).toEqual(20);
       });
 
-      it("Player 4 gets 20 gameplay", () => {
+      it("Player 4 gets 20 cards", () => {
         expect(playersHands[3].length).toEqual(20);
       });
 
-      it("Player 5 gets 20 gameplay", () => {
+      it("Player 5 gets 20 cards", () => {
         expect(playersHands[4].length).toEqual(20);
       });
 
-      it("Player 6 gets 20 gameplay", () => {
+      it("Player 6 gets 20 cards", () => {
         expect(playersHands[5].length).toEqual(20);
       });
 
-      it("The deck only has 42 gameplay left", () => {
+      it("The deck only has 42 cards left", () => {
         expect(deck.cards.length).toEqual(42);
       });
 
-      describe("Combined gameplay across players stock pile and deck is 162 12 of each number card and 18 skip-bo gameplay", () => {
+      describe("Combined cards across players stock pile and deck is 162 12 of each number card and 18 skip-bo cards", () => {
         const allCards: Card[] = combineDeckAndPlayersHands(deck, playersHands);
         validateAllCards(allCards);
       });
@@ -249,7 +249,7 @@ describe("Card Deck Functionality", () => {
       expect(actualCard).toEqual(expectedCard);
     });
 
-    it("Provides an accurate count of gameplay remaining", () => {
+    it("Provides an accurate count of cards remaining", () => {
       const deck: Deck = new Deck();
       deck.dealStockpiles(6);
 
@@ -269,13 +269,13 @@ describe("Card Deck Functionality", () => {
       validateAllCards(combineDeckAndPlayersHands(deck, playersHands));
     });
 
-    describe("If no gameplay remain, then it throws an exception", () => {
+    it("If no cards remain, then it throws an exception", () => {
       const deck: Deck = new Deck();
       deck.cards = [];
 
       expect(() => {
         deck.dealNextCard();
-      }).toThrow(new Error("Deck is out of gameplay"));
+      }).toThrow(new Error("Deck is out of cards"));
     });
   });
 });
@@ -304,55 +304,55 @@ function validateAllCards(cards: Card[]): void {
     return count;
   }
 
-  it("There are 162 total gameplay", () => {
+  it("There are 162 total cards", () => {
     expect(cards.length).toEqual(162);
   });
 
-  it("There are exactly 12 ONE gameplay", () => {
+  it("There are exactly 12 ONE cards", () => {
     expect(numberOfCards(cards, Card.ONE)).toEqual(12);
   });
 
-  it("There are exactly 12 TWO gameplay", () => {
+  it("There are exactly 12 TWO cards", () => {
     expect(numberOfCards(cards, Card.TWO)).toEqual(12);
   });
 
-  it("There are exactly 12 THREE gameplay", () => {
+  it("There are exactly 12 THREE cards", () => {
     expect(numberOfCards(cards, Card.THREE)).toEqual(12);
   });
 
-  it("There are exactly 12 FOUR gameplay", () => {
+  it("There are exactly 12 FOUR cards", () => {
     expect(numberOfCards(cards, Card.FOUR)).toEqual(12);
   });
 
-  it("There are exactly 12 FIVE gameplay", () => {
+  it("There are exactly 12 FIVE cards", () => {
     expect(numberOfCards(cards, Card.FIVE)).toEqual(12);
   });
 
-  it("There are exactly 12 SIX gameplay", () => {
+  it("There are exactly 12 SIX cards", () => {
     expect(numberOfCards(cards, Card.SIX)).toEqual(12);
   });
 
-  it("There are exactly 12 SEVEN gameplay", () => {
+  it("There are exactly 12 SEVEN cards", () => {
     expect(numberOfCards(cards, Card.SEVEN)).toEqual(12);
   });
 
-  it("There are exactly 12 EIGHT gameplay", () => {
+  it("There are exactly 12 EIGHT cards", () => {
     expect(numberOfCards(cards, Card.EIGHT)).toEqual(12);
   });
 
-  it("There are exactly 12 NINE gameplay", () => {
+  it("There are exactly 12 NINE cards", () => {
     expect(numberOfCards(cards, Card.NINE)).toEqual(12);
   });
 
-  it("There are exactly 12 TEN gameplay", () => {
+  it("There are exactly 12 TEN cards", () => {
     expect(numberOfCards(cards, Card.TEN)).toEqual(12);
   });
 
-  it("There are exactly 12 ELEVEN gameplay", () => {
+  it("There are exactly 12 ELEVEN cards", () => {
     expect(numberOfCards(cards, Card.ELEVEN)).toEqual(12);
   });
 
-  it("There are exactly 12 TWELVE gameplay", () => {
+  it("There are exactly 12 TWELVE cards", () => {
     expect(numberOfCards(cards, Card.TWELVE)).toEqual(12);
   });
 

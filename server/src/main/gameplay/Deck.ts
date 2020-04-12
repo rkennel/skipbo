@@ -76,7 +76,7 @@ export default class Deck {
 
   dealNextCard(): Card {
     if (this.cards.length === 0) {
-      throw new Error("Deck is out of gameplay");
+      throw new Error("Deck is out of cards");
     }
 
     const card: Card = this.cards[0];

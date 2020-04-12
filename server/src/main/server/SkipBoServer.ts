@@ -1,5 +1,6 @@
 import * as restify from "restify";
-import { Server } from "restify";
+import {Server} from "restify";
+import EntityControllerFactory from "../common/EntityFactory";
 
 const PORT = process.env.PORT || 8080;
 
@@ -41,5 +42,9 @@ export default class SkipBoServer {
       res.send("SkipBo Server is up and running");
       next();
     });
+
+    for(let controller of EntityControllerFactory.getAllControllers()){
+      controller.registerRoute(server);
+    }
   }
 }
