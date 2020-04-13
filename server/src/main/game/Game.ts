@@ -1,35 +1,21 @@
-import Player from "../gameplay/Player";
+import Player from "../player/Player";
 import Deck from "../gameplay/Deck";
 import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";
 import Entity from "../common/Entity";
+import {generateUniqueId} from "../common/UniqueIdGenerator";
 
 export default class Game implements Entity {
+
   players: Player[] = [];
   spectators: Player[] = [];
   deck: Deck = new Deck();
   buildingPiles: Card[][] = [[], [], [], []];
   id: string;
-  name: string = "game";
+  entityName: string = "game";
 
   constructor() {
-    this.id = this.generateUniqueId();
-  }
-
-
-  private generateUniqueId(): string {
-    const availableCharacters = "abcdefghijklmnopqrstuvwxyz0123456789";
-
-    let id = "";
-    for (let i = 0; i < 8; i++) {
-      const randomIndex: number = Math.floor(
-        Math.random() * availableCharacters.length
-      );
-
-      id = id + availableCharacters.charAt(randomIndex);
-    }
-
-    return id;
+    this.id = generateUniqueId();
   }
 
   addPlayer(player: Player): void {
@@ -49,6 +35,7 @@ export default class Game implements Entity {
       players.push(player);
       this.removePerson(player, playersToRemoveFrom);
     }
+    player.gameid=this.id;
   }
 
   removePlayer(player: Player): void {
@@ -60,6 +47,7 @@ export default class Game implements Entity {
     if (index > -1) {
       players.splice(index, 1);
     }
+    player.gameid = undefined;
   }
 
   private findPlayerIndex(player: Player, players: Player[]): number {

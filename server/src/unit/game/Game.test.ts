@@ -1,7 +1,9 @@
 import Game from "../../main/game/Game";
-import Player from "../../main/gameplay/Player";
+import Player from "../../main/player/Player";
+import {clearAllEntities} from "../common/EntityUtils";
 
 describe("Playing the game", () => {
+
   describe("Game Identifier", () => {
     it("Generates a unique identifier", () => {
       const game = new Game();
@@ -46,6 +48,16 @@ describe("Playing the game", () => {
 
   describe("adding and removing players from the game", () => {
     describe("Active Players", () => {
+
+      it("When player is added to the game, the game id is automatically assigned",()=>{
+        const game = new Game();
+        const player = new Player("Alan");
+
+        game.addPlayer(player);
+
+        expect(player.gameid).toEqual(game.id);
+      });
+
       it("Throws an error if more than 6 players are added to the game", () => {
         const game = new Game();
         game.addPlayer(new Player("Ross"));
@@ -95,6 +107,17 @@ describe("Playing the game", () => {
         expect(game.players.includes(player)).toBe(false);
       });
 
+      it("Removing player results in the game id being set to undefined", () => {
+        const game = new Game();
+        const player = new Player("MJ");
+
+        game.addPlayer(player);
+        game.removePlayer(player);
+
+        expect(player.gameid).toBeUndefined();
+      });
+
+
       it("Removing player not in the game has no effect", () => {
         const game = new Game();
         const player = new Player("MJ");
@@ -110,6 +133,16 @@ describe("Playing the game", () => {
     });
 
     describe("Spectators", () => {
+
+      it("When spectator is added to the game, the game id is automatically assigned",()=>{
+        const game = new Game();
+        const player = new Player("Alan");
+
+        game.addSpectator(player);
+
+        expect(player.gameid).toEqual(game.id);
+      });
+
       it("If player already a spectator is added then there is no effect", () => {
         const game = new Game();
         const player = new Player("Hastings");
@@ -143,6 +176,16 @@ describe("Playing the game", () => {
 
         expect(game.spectators.length).toEqual(0);
         expect(game.spectators.includes(player)).toBe(false);
+      });
+
+      it("Removing spectator results in the game id being set to undefined", () => {
+        const game = new Game();
+        const player = new Player("Hastings");
+
+        game.addPlayer(player);
+        game.removeSpectator(player);
+
+        expect(player.gameid).toBeUndefined();
       });
 
       it("Removing spectator not spectating has no effect", () => {

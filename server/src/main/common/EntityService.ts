@@ -1,52 +1,42 @@
 import Entity from "./Entity";
-import {Next, Request, Response} from "restify";
-import Game from "../game/Game";
-import status from "statuses";
 
 export default class EntityService<T extends Entity> {
 
-    private entities: Map<string, Game> = new Map();
+    protected entities: Map<string, T> = new Map();
     private entity: T;
+    private createEntityFunc:()=>T;
 
-    constructor(entity:T){
+    constructor(entity:T,createEntityFunc:()=>T){
         this.entity=entity;
+        this.createEntityFunc=createEntityFunc;
     }
 
     entityName():string{
-        return this.entity.name;
+        return this.entity.entityName;
     }
 
-    getAll(req: Request, res: Response, next: Next) {
-        res.send(Array.from(this.entities.values()));
-        next();
+    getAll(): T[] {
+        return Array.from(this.entities.values());
     }
 
-    createNew(req: Request, res: Response, next: Next) {
-        const game: Game = new Game();
-        this.entities.set(game.id, game);
-        res.send(status("created"), game);
-        next();
-    }
-
-    getById(req: Request, res: Response, next: Next) {
-        const id = req.params.id;
-
-        const game:Game = this.entities.get(id);
-
-        if(game){
-            res.send(game);
-        }
-        else{
-            res.send(status("not found"));
+    createNew(entity?:T): T {
+        if(!entity){
+            entity = this.createEntityFunc();
         }
 
-        next();
+        this.entities.set(entity.id, entity);
+        return entity;
     }
 
-    delete(req: Request, res: Response, next: Next) {
-        const id = req.params.id;
+    getById(id:string) {
+        return this.entities.get(id);
+    }
+
+    deleteById(id:string) {
         this.entities.delete(id);
+    }
 
-        res.send(status("no content"));
+    deleteAll(){
+        this.entities.clear();
     }
 }

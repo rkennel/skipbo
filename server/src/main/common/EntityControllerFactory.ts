@@ -1,6 +1,7 @@
 import GameController from "../game/GameController";
 import EntityController from "../server/EntityController";
 import Entity from "./Entity";
+import PlayerEntityController from "../player/PlayerEntityController";
 
 export default class EntityControllerFactory {
 
@@ -13,6 +14,7 @@ export default class EntityControllerFactory {
 
         const map:Map<string,EntityController<Entity>> = new Map();
         addController(new GameController());
+        addController(new PlayerEntityController());
         return map;
     }
 

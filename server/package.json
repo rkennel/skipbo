@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./src/**/*.ts --fix",
-    "test:unit": "jest src/unit/**/*.test.ts",
+    "prebuild": "npm run lint",
+    "build": "tsc",
+    "pretest:unit": "eslint ./src/**/*.ts --fix",
+    "test:unit": "jest src/unit/**/*.test.ts --maxWorkers=1",
     "serve:desktop": "nodemon ./src/main/index.ts"
   },
   "repository": {

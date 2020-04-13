@@ -1,5 +1,5 @@
 import * as restify from "restify";
-import {Server} from "restify";
+import {Server,plugins} from "restify";
 import EntityControllerFactory from "../common/EntityControllerFactory";
 
 const PORT = process.env.PORT || 8080;
@@ -26,6 +26,8 @@ export default class SkipBoServer {
 
     if (!this.server) {
       this.server = restify.createServer();
+      this.server.use(plugins.acceptParser(this.server.acceptable));
+      this.server.use(plugins.bodyParser({ mapParams: true }));
       this.registerRoutes(this.server);
     }
     if (!this.isListening()) {
