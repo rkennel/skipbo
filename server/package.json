@@ -9,7 +9,9 @@
     "build": "tsc",
     "pretest:unit": "eslint ./src/**/*.ts --fix",
     "test:unit": "jest src/unit/**/*.test.ts --maxWorkers=1",
-    "serve:desktop": "nodemon ./src/main/index.ts"
+    "posttest:unit": "npm run commit",
+    "serve:desktop": "nodemon ./src/main/index.ts",
+    "commit": "git add -A; timestamp=$(date \"+%c\") && git commit -m \"Test and Commit @ $timestamp\";"
   },
   "repository": {
     "type": "git",
