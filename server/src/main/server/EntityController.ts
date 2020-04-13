@@ -4,6 +4,7 @@ import EntityServiceFactory from "../common/EntityServiceFactory";
 import Entity from "../common/Entity";
 import status from "statuses";
 import {ErrorResponse} from "./ErrorResponse";
+import {NotFoundError} from "../common/Errors";
 
 /*
 Some Useful documentation
@@ -107,24 +108,25 @@ export default abstract class EntityController<T extends Entity> {
             next();
         }
         catch(error){
-            const httpStatus = status("bad request");
-            const errorResponse = new ErrorResponse(httpStatus,error.message);
-            res.send(httpStatus,errorResponse);
-            next();
+            this.handleError(error, res, next);
         }
 
     }
 
+
     updatedById(req: Request, res: Response, next: Next) {
         const id = req.params.id;
-
         const updatedEntity = <T>req.body;
 
-        this.entityService.updateById(id,updatedEntity);
+        try{
+            this.entityService.updateById(id,updatedEntity);
+            res.send(status("ok"),updatedEntity);
+            next();
+        }
+        catch(error){
+            this.handleError(error, res, next);
+        }
 
-        res.send(status("ok"),updatedEntity);
-
-        next();
     }
 
     delete(req: Request, res: Response, next: Next) {
@@ -132,6 +134,17 @@ export default abstract class EntityController<T extends Entity> {
         this.entityService.deleteById(id);
 
         res.send(status("no content"));
+    }
+
+    private handleError(error: Error, res: Response, next: Next) {
+        let httpStatus = status("bad request");
+        if(error instanceof NotFoundError){
+            httpStatus = status("not found");
+        }
+
+        const errorResponse = new ErrorResponse(httpStatus, error.message);
+        res.send(httpStatus, errorResponse);
+        next();
     }
 
 }

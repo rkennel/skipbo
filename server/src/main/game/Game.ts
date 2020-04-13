@@ -40,6 +40,13 @@ export default class Game implements Entity {
     player.gameid=this.id;
   }
 
+  removeAllPlayers() {
+    for(let player of this.players){
+      player.id = undefined;
+    }
+    this.players = [];
+  }
+
   removePlayer(player: Player): void {
     this.removePerson(player, this.players);
   }
@@ -66,6 +73,13 @@ export default class Game implements Entity {
     this.addPerson(player, this.spectators, this.players);
   }
 
+  removeAllSpectators() {
+    for(let player of this.spectators){
+      player.id = undefined;
+    }
+    this.spectators = [];
+  }
+
   removeSpectator(player: Player) {
     this.removePerson(player, this.spectators);
   }
@@ -86,4 +100,5 @@ export default class Game implements Entity {
 
     return output;
   }
+
 }

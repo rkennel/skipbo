@@ -3,7 +3,7 @@ import {createAndReadTests, deleteTests, updateTests} from "../common/Controller
 import Game from "../../main/game/Game";
 import Player from "../../main/player/Player";
 import supertest, {Response} from "supertest";
-import {clearAllEntities} from "../common/EntityUtils";
+import {clearAllEntities, clearAllPlayersAndSpectators} from "../common/EntityUtils";
 import Entity from "../../main/common/Entity";
 
 describe("Player Rest Services", () => {
@@ -18,6 +18,10 @@ describe("Player Rest Services", () => {
         clearAllEntities();
         server.start();
         game = await createNewGame(server);
+    });
+
+    beforeEach(()=>{
+        clearAllPlayersAndSpectators();
     });
 
     afterAll(() => {

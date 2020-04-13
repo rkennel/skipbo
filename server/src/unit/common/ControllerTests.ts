@@ -1,6 +1,8 @@
 import supertest, {Response} from "supertest";
 import SkipBoServer from "../../main/server/SkipBoServer";
 import Entity from "../../main/common/Entity";
+import EntityServiceFactory from "../../main/common/EntityServiceFactory";
+import Player from "../../main/player/Player";
 
 export function createAndReadTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity) {
     it("Before any data has been added, get returns an empty list", async () => {
@@ -48,8 +50,9 @@ export function updateTests(server: SkipBoServer, entityName: string, createEnti
     });
 
     it(`I can update a ${entityName} using a put`, async () => {
+
         const postResponse: Response = await createEntity(server,entityName,createEntityFunc);
-        const entityCreated = postResponse.body;
+        const entityCreated = <Entity>postResponse.body;
 
         const updatedEntity = updateEntityFunc(entityCreated);
         const response: Response = await supertest(server.server).put(`/${entityName}/${updatedEntity.id}`).send(updatedEntity);
@@ -58,14 +61,13 @@ export function updateTests(server: SkipBoServer, entityName: string, createEnti
     });
 
     it(`I cannot update a ${entityName} if it does not exist`, async () => {
-        const postResponse: Response = await createEntity(server,entityName,createEntityFunc);
-        const entityCreated = postResponse.body;
-
-        const updatedEntity = updateEntityFunc(entityCreated);
+        const updatedEntity = createEntityFunc();
         updatedEntity.id = "doesnotexist";
+
         const response: Response = await supertest(server.server).put(`/${entityName}/${updatedEntity.id}`).send(updatedEntity);
-        expect(response.status).toEqual(200);
-        expect(response.body).toEqual(updatedEntity);
+        expect(response.status).toEqual(404);
+        expect(response.body.httpStatus).toEqual(404);
+        expect(response.body.errorMessage).toEqual(`${updatedEntity.entityName}: ${updatedEntity.id} does not exist`);
     });
 
 }

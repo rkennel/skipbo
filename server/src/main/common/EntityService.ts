@@ -1,4 +1,5 @@
 import Entity from "./Entity";
+import {NotFoundError} from "./Errors";
 
 export default class EntityService<T extends Entity> {
 
@@ -41,6 +42,12 @@ export default class EntityService<T extends Entity> {
     }
 
     updateById(id: string, updatedEntity: T) {
+        const currentEntity:T = this.entities.get(updatedEntity.id);
+
+        if(!currentEntity){
+            throw new NotFoundError(`${updatedEntity.entityName}: ${updatedEntity.id} does not exist`);
+        }
+
         this.entities.set(id,updatedEntity);
     }
 }

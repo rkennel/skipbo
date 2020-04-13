@@ -1,17 +1,11 @@
-import EntityService from "../common/EntityService";
 import Spectator from "./Specatator";
-import PlayerEntityService from "../player/PlayerEntityService";
+import PersonEntityService from "../player/PersonEntityService";
 
-export default class SpectatorEntityService extends EntityService<Spectator> {
+export default class SpectatorEntityService extends PersonEntityService<Spectator> {
 
     constructor() {
         super(Spectator.ENTITY_NAME, () => {
             return new Spectator();
         });
     }
-
-    createNew(spectator: Spectator):Spectator {
-        return <Spectator>PlayerEntityService.createNewPlayerOrSpectator(spectator,this.getEntityName(),this.entities);
-    }
-
 }
