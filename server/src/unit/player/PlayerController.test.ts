@@ -129,6 +129,16 @@ describe("Player Rest Services", () => {
                 expect(putResponse.body.errorMessage).toEqual(`Cannot update player stockpiles via this method`);
             });
 
+            it("Updating hand cards throws a 400 error",async ()=>{
+                player.hand = [Card.SKIP_BO];
+
+                const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
+
+                expect(putResponse.status).toEqual(400);
+                expect(putResponse.body.httpStatus).toEqual(400);
+                expect(putResponse.body.errorMessage).toEqual(`Cannot update player hand via this method`);
+            });
+
         });
 
     });

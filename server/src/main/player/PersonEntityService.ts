@@ -69,5 +69,8 @@ export default class PersonEntityService<T extends Player> extends EntityService
         if(currentEntity.stockpile!=updatedEntity.stockpile){
             throw new Error("Cannot update player stockpiles via this method");
         }
+        if(currentEntity.hand!=updatedEntity.hand){
+            throw new Error("Cannot update player hand via this method");
+        }
     }
 }
