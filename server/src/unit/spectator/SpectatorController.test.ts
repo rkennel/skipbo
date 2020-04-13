@@ -54,34 +54,6 @@ describe("Player Rest Services", () => {
         expect(response.body.errorMessage).toEqual(`Game: ${player.gameid} does not exist`);
     });
 
-    it("Games can only have up to six players", async () => {
-
-        const game = await createNewGame(server);
-
-        const players = [
-            new Player("Lance"),
-            new Player("Alan"),
-            new Player("Lou"),
-            new Player("Kirk"),
-            new Player("Jack"),
-            new Player("Chester")
-        ];
-
-        for(let player of players){
-            player.gameid = game.id;
-            await supertest(server.server).post(`/${entityName}`).send(player).set('Accept', 'application/json');
-        }
-
-        const player = new Player("Darrell");
-        player.gameid = game.id;
-
-        const response: Response = await supertest(server.server).post(`/${entityName}`).send(player).set('Accept', 'application/json');
-
-        expect(response.status).toEqual(400);
-        expect(response.body.httpStatus).toEqual(400);
-        expect(response.body.errorMessage).toEqual(`Maximum of 6 players is allowed`);
-    });
-
     deleteTests(server, entityName, createPlayer);
 
 });
