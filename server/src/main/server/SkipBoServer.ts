@@ -41,12 +41,7 @@ export default class SkipBoServer {
   }
 
   private registerRoutes(server: Server) {
-
-    this.server.pre(function (req, res, next) {
-      console.log(req);
-      next();
-    });
-
+    
     server.get("/health", (req, res, next) => {
       res.send("SkipBo Server is up and running");
       next();
