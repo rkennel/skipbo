@@ -72,5 +72,8 @@ export default class PersonEntityService<T extends Player> extends EntityService
         if(currentEntity.hand!=updatedEntity.hand){
             throw new Error("Cannot update player hand via this method");
         }
+        if(currentEntity.discardPiles!=updatedEntity.discardPiles){
+            throw new Error("Cannot update player discard piles via this method");
+        }
     }
 }

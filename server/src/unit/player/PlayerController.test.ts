@@ -102,14 +102,14 @@ describe("Player Rest Services", () => {
 
         let player: Player;
 
-        beforeEach(async ()=>{
+        beforeEach(async () => {
             clearAllPlayersAndSpectators();
-            player = await createPlayerOnServer(server,Player.ENTITY_NAME,createPlayer());
+            player = await createPlayerOnServer(server, Player.ENTITY_NAME, createPlayer());
         });
 
-        describe("Cheater trying to update something other than their name", ()=>{
+        describe("Cheater trying to update something other than their name", () => {
 
-            it("Updating game id throws a 400 error",async ()=>{
+            it("Updating game id throws a 400 error", async () => {
                 player.gameid = "newgameid";
                 const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
 
@@ -119,7 +119,7 @@ describe("Player Rest Services", () => {
             });
 
 
-            it("Updating stock pile cards throws a 400 error",async ()=>{
+            it("Updating stock pile cards throws a 400 error", async () => {
                 player.stockpile = [Card.SKIP_BO];
 
                 const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
@@ -129,7 +129,7 @@ describe("Player Rest Services", () => {
                 expect(putResponse.body.errorMessage).toEqual(`Cannot update player stockpiles via this method`);
             });
 
-            it("Updating hand cards throws a 400 error",async ()=>{
+            it("Updating hand cards throws a 400 error", async () => {
                 player.hand = [Card.SKIP_BO];
 
                 const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
@@ -139,6 +139,20 @@ describe("Player Rest Services", () => {
                 expect(putResponse.body.errorMessage).toEqual(`Cannot update player hand via this method`);
             });
 
+            it("Updating discard pile cards throws a 400 error", async () => {
+                player.discardPiles = [
+                    [Card.SKIP_BO],
+                    [Card.SKIP_BO],
+                    [Card.SKIP_BO],
+                    [Card.SKIP_BO]
+                ];
+
+                const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
+
+                expect(putResponse.status).toEqual(400);
+                expect(putResponse.body.httpStatus).toEqual(400);
+                expect(putResponse.body.errorMessage).toEqual(`Cannot update player discard piles via this method`);
+            });
         });
 
     });
@@ -159,7 +173,7 @@ async function createNewGame(server: SkipBoServer): Promise<Game> {
 async function createPlayerOnServer(server: SkipBoServer, entityName: string, player: Player): Promise<Player> {
     const postResponse = await supertest(server.server).post(`/${entityName}`).send(player).set('Accept', 'application/json');
 
-    if(postResponse.status!=201){
+    if (postResponse.status != 201) {
         throw new Error("Error creating player");
     }
 
