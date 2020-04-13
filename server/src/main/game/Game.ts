@@ -26,9 +26,7 @@ export default class Game implements Entity {
       throw new Error("Maximum of 6 players is allowed");
     }
 
-    this.validatePlayerNameUniqueness(player);
-
-    this.addPerson(player, this.players, this.spectators);
+    this.addPerson(player, this.players);
   }
 
   private validatePlayerNameUniqueness(person: Player) {
@@ -45,11 +43,12 @@ export default class Game implements Entity {
   private addPerson(
     player: Player,
     players: Player[],
-    playersToRemoveFrom: Player[]
   ) {
+
+    this.validatePlayerNameUniqueness(player);
+
     if (!players.includes(player)) {
       players.push(player);
-      this.removePerson(player, playersToRemoveFrom);
     }
     player.gameid=this.id;
   }
@@ -84,7 +83,7 @@ export default class Game implements Entity {
   }
 
   addSpectator(player: Player): void {
-    this.addPerson(player, this.spectators, this.players);
+    this.addPerson(player, this.spectators);
   }
 
   removeAllSpectators() {

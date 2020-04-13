@@ -138,28 +138,23 @@ describe("Playing the game", () => {
         expect(player.gameid).toEqual(game.id);
       });
 
-      it("If player already a spectator is added then there is no effect", () => {
+      it("If player already a spectator then throw duplicate player exception", () => {
         const game = new Game();
         const player = new Player("Hastings");
 
         game.addSpectator(player);
-        game.addSpectator(player);
 
-        expect(game.spectators.length).toEqual(1);
-        expect(game.spectators.includes(player)).toBe(true);
+        expect(()=>{game.addSpectator(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
       });
 
-      it("If player was in the game then remove player from the game", () => {
+      it("If player is in the game then throw duplicate player error", () => {
         const game = new Game();
         const player = new Player("Hastings");
 
         game.addPlayer(player);
-        game.addSpectator(player);
 
-        expect(game.spectators.length).toEqual(1);
-        expect(game.spectators.includes(player)).toBe(true);
-        expect(game.players.length).toEqual(0);
-        expect(game.players.includes(player)).toBe(false);
+        expect(()=>{game.addSpectator(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
+
       });
 
       it("Removing spectator results in the player no longer being in the spectator group", () => {
