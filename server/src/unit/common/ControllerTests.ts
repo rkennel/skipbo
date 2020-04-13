@@ -61,7 +61,7 @@ export function deleteTests(server: SkipBoServer, entityName: string, createEnti
     });
 }
 
-async function createEntity(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity, post: boolean = true): Promise<Response> {
+export async function createEntity(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity, post: boolean = true): Promise<Response> {
 
     if (createEntityFunc && post) {
         return supertest(server.server).post(`/${entityName}`).send(createEntityFunc());
