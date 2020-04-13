@@ -48,6 +48,12 @@ export default class EntityService<T extends Entity> {
             throw new NotFoundError(`${updatedEntity.entityName}: ${updatedEntity.id} does not exist`);
         }
 
+        this.validateUpdates(currentEntity,updatedEntity);
+
         this.entities.set(id,updatedEntity);
+    }
+
+    validateUpdates(currentEntity: T, updatedEntity: T) {
+        //throw error if you don't like the update
     }
 }

@@ -61,4 +61,10 @@ export default class PersonEntityService<T extends Player> extends EntityService
         this.entities.clear();
     }
 
+
+    validateUpdates(currentEntity: T, updatedEntity: T) {
+        if(currentEntity.stockpile!=updatedEntity.stockpile){
+            throw new Error("Cannot update player stockpiles via this method");
+        }
+    }
 }
