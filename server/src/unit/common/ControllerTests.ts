@@ -57,6 +57,16 @@ export function updateTests(server: SkipBoServer, entityName: string, createEnti
         expect(response.body).toEqual(updatedEntity);
     });
 
+    it(`I cannot update a ${entityName} if it does not exist`, async () => {
+        const postResponse: Response = await createEntity(server,entityName,createEntityFunc);
+        const entityCreated = postResponse.body;
+
+        const updatedEntity = updateEntityFunc(entityCreated);
+        updatedEntity.id = "doesnotexist";
+        const response: Response = await supertest(server.server).put(`/${entityName}/${updatedEntity.id}`).send(updatedEntity);
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual(updatedEntity);
+    });
 
 }
 
