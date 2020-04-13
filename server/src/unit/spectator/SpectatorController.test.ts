@@ -8,7 +8,7 @@ import {clearAllEntities} from "../common/EntityUtils";
 
 describe("Player Rest Services", () => {
 
-    const entityName = new Player("Dikembe").entityName;
+    const entityName = "spectator";
     const server: SkipBoServer = new SkipBoServer();
 
     let game: Game;
@@ -40,7 +40,7 @@ describe("Player Rest Services", () => {
 
         expect(response.status).toEqual(400);
         expect(response.body.httpStatus).toEqual(400);
-        expect(response.body.errorMessage).toEqual("Must specify game for player to be added to");
+        expect(response.body.errorMessage).toEqual("Must specify game for spectator to be added to");
     });
 
     it("Fails to add player if a game id specified does not exist", async () => {

@@ -4,11 +4,7 @@ import Player from "./Player";
 export default class PlayerEntityController extends EntityController<Player>{
 
     constructor() {
-        super();
-    }
-
-    entity(): Player {
-        return new Player();
+        super(Player.ENTITY_NAME);
     }
 
 }

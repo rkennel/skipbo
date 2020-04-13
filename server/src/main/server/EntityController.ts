@@ -8,35 +8,35 @@ import {ErrorResponse} from "./ErrorResponse";
 export default abstract class EntityController<T extends Entity> {
 
     entityService:EntityService<Entity>
+    private entityName: string;
 
-    constructor() {
-        this.entityService = EntityServiceFactory.getEntityService(this.entityName());
+    constructor(entityName: string) {
+        this.entityName = entityName;
+        this.entityService = EntityServiceFactory.getEntityService(this.getEntityName());
     }
 
-    abstract entity():T;
-
-    entityName():string{
-        return this.entity().entityName;
+    getEntityName():string{
+        return this.entityName;
     }
 
     registerRoute(server: Server) {
-        server.get(`/${this.entityName()}`, (req, res, next) => {
+        server.get(`/${this.getEntityName()}`, (req, res, next) => {
             this.getAll(req, res, next);
         });
 
-        server.get(`/${this.entityName()}/:id`, (req, res, next) => {
+        server.get(`/${this.getEntityName()}/:id`, (req, res, next) => {
             this.getById(req, res, next);
         });
 
-        server.post(`/${this.entityName()}`, (req, res, next) => {
+        server.post(`/${this.getEntityName()}`, (req, res, next) => {
             this.createNew(req, res, next);
         });
 
-        server.put(`/${this.entityName()}`, (req, res, next) => {
+        server.put(`/${this.getEntityName()}`, (req, res, next) => {
             this.createNew(req, res, next);
         });
 
-        server.del(`/${this.entityName()}/:id`, (req, res, next) => {
+        server.del(`/${this.getEntityName()}/:id`, (req, res, next) => {
             this.delete(req, res, next);
         });
     }

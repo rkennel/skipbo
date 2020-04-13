@@ -7,12 +7,14 @@ import {generateUniqueId} from "../common/UniqueIdGenerator";
 
 export default class Game implements Entity {
 
+  static ENTITY_NAME: string = "game";
+
   players: Player[] = [];
   spectators: Player[] = [];
   deck: Deck = new Deck();
   buildingPiles: Card[][] = [[], [], [], []];
   id: string;
-  entityName: string = "game";
+  entityName: string = Game.ENTITY_NAME;
 
   constructor() {
     this.id = generateUniqueId();

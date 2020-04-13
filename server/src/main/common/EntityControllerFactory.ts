@@ -1,7 +1,8 @@
-import GameController from "../game/GameController";
+import GameEntityController from "../game/GameEntityController";
 import EntityController from "../server/EntityController";
 import Entity from "./Entity";
 import PlayerEntityController from "../player/PlayerEntityController";
+import SpectatorEntityController from "../spectator/SpectatorEntityController";
 
 export default class EntityControllerFactory {
 
@@ -9,12 +10,13 @@ export default class EntityControllerFactory {
 
     private static initializeControllers():Map<string,EntityController<Entity>> {
         function addController(controller: EntityController<Entity>) {
-            map.set(controller.entityName(),controller);
+            map.set(controller.getEntityName(),controller);
         }
 
         const map:Map<string,EntityController<Entity>> = new Map();
-        addController(new GameController());
+        addController(new GameEntityController());
         addController(new PlayerEntityController());
+        addController(new SpectatorEntityController());
         return map;
     }
 

@@ -3,16 +3,16 @@ import Entity from "./Entity";
 export default class EntityService<T extends Entity> {
 
     protected entities: Map<string, T> = new Map();
-    private entity: T;
     private createEntityFunc:()=>T;
+    private entityName: string;
 
-    constructor(entity:T,createEntityFunc:()=>T){
-        this.entity=entity;
+    constructor(entityName:string,createEntityFunc:()=>T){
+        this.entityName = entityName;
         this.createEntityFunc=createEntityFunc;
     }
 
-    entityName():string{
-        return this.entity.entityName;
+    getEntityName():string{
+        return this.entityName;
     }
 
     getAll(): T[] {

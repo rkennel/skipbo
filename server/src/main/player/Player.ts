@@ -4,6 +4,8 @@ import {generateUniqueId} from "../common/UniqueIdGenerator";
 
 export default class Player implements Entity{
 
+  static ENTITY_NAME: string = "player";
+
   id: string;
   name: string;
   gameid: string;
@@ -22,3 +24,5 @@ export default class Player implements Entity{
   }
 
 }
+
+

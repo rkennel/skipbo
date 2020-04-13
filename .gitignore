@@ -230,7 +230,7 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-# Including strong entityName files can present a security risk
+# Including strong getEntityName files can present a security risk
 # (https://github.com/github/gitignore/pull/2483#issue-259490424)
 #*.snk
 
