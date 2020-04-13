@@ -39,4 +39,8 @@ export default class EntityService<T extends Entity> {
     deleteAll(){
         this.entities.clear();
     }
+
+    updateById(id: string, updatedEntity: T) {
+        this.entities.set(id,updatedEntity);
+    }
 }

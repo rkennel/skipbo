@@ -31,7 +31,9 @@ export default abstract class EntityController<T extends Entity> {
 
         this.registerCreateNew(server);
 
-        this.registerUpdate(server);
+        this.registerUpdateAll(server);
+
+        this.registerUpdateById(server);
 
         this.registerDelete(server);
     }
@@ -54,9 +56,16 @@ export default abstract class EntityController<T extends Entity> {
         });
     }
 
-    registerUpdate(server: Server) {
+    registerUpdateAll(server: Server) {
         server.put(`/${this.getEntityName()}`, (req, res, next) => {
             res.send(status("method not allowed"));
+            next();
+        });
+    }
+
+    registerUpdateById(server: Server) {
+        server.put(`/${this.getEntityName()}/:id`, (req, res, next) => {
+            this.updatedById(req,res,next);
         });
     }
 
@@ -68,6 +77,21 @@ export default abstract class EntityController<T extends Entity> {
 
     getAll(req: Request, res: Response, next: Next) {
         res.send(Array.from(this.entityService.getAll()));
+        next();
+    }
+
+    getById(req: Request, res: Response, next: Next) {
+        const id = req.params.id;
+
+        const entity = this.entityService.getById(id);
+
+        if(entity){
+            res.send(entity);
+        }
+        else{
+            res.send(status("not found"));
+        }
+
         next();
     }
 
@@ -91,17 +115,14 @@ export default abstract class EntityController<T extends Entity> {
 
     }
 
-    getById(req: Request, res: Response, next: Next) {
+    updatedById(req: Request, res: Response, next: Next) {
         const id = req.params.id;
 
-        const entity = this.entityService.getById(id);
+        const updatedEntity = <T>req.body;
 
-        if(entity){
-            res.send(entity);
-        }
-        else{
-            res.send(status("not found"));
-        }
+        this.entityService.updateById(id,updatedEntity);
+
+        res.send(status("ok"),updatedEntity);
 
         next();
     }

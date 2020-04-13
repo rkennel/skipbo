@@ -1,9 +1,10 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
-import {createAndReadTests, deleteTests} from "../common/ControllerTests";
+import {createAndReadTests, deleteTests, updateTests} from "../common/ControllerTests";
 import Game from "../../main/game/Game";
 import Player from "../../main/player/Player";
 import supertest, {Response} from "supertest";
 import {clearAllEntities} from "../common/EntityUtils";
+import Entity from "../../main/common/Entity";
 
 describe("Player Rest Services", () => {
 
@@ -26,8 +27,14 @@ describe("Player Rest Services", () => {
 
     const createPlayer = () => {
         counter++;
-        const player = <Player>{name:"Player " + counter};
+        const player = <Player>{name: "Player " + counter};
         player.gameid = game.id;
+        return player;
+    };
+
+    const updatePlayer = (entity: Entity) => {
+        const player: Player = <Player>entity;
+        player.name = `${player.name} modified`;
         return player;
     };
 
@@ -66,7 +73,7 @@ describe("Player Rest Services", () => {
             new Player("Chester")
         ];
 
-        for(let player of players){
+        for (let player of players) {
             player.gameid = game.id;
             await supertest(server.server).post(`/${entityName}`).send(player).set('Accept', 'application/json');
         }
@@ -81,11 +88,13 @@ describe("Player Rest Services", () => {
         expect(response.body.errorMessage).toEqual(`Maximum of 6 players is allowed`);
     });
 
+    updateTests(server, entityName, createPlayer, updatePlayer);
+
     deleteTests(server, entityName, createPlayer);
 
 });
 
-async function createNewGame(server: SkipBoServer):Promise<Game> {
+async function createNewGame(server: SkipBoServer): Promise<Game> {
     await supertest(server.server).post("/game");
     const getResponse = await supertest(server.server).get("/game");
     const game = <Game>getResponse.body[0];
