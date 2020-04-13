@@ -1,6 +1,7 @@
 import Game from "../../main/game/Game";
 import Player from "../../main/player/Player";
 import {clearAllEntities} from "../common/EntityUtils";
+import {DuplicateError} from "../../main/common/Errors";
 
 describe("Playing the game", () => {
 
@@ -72,28 +73,22 @@ describe("Playing the game", () => {
         }).toThrow(new Error("Maximum of 6 players is allowed"));
       });
 
-      it("If player already in the game is added then there is no effect", () => {
+      it("If player already in the game is added then throw duplicate player error", () => {
         const game = new Game();
         const player = new Player("MJ");
 
         game.addPlayer(player);
-        game.addPlayer(player);
 
-        expect(game.players.length).toEqual(1);
-        expect(game.players.includes(player)).toBe(true);
+        expect(()=>{game.addPlayer(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
       });
 
-      it("If player was in the spectator group then remove player from the spectator group", () => {
+      it("If player is in the spectator group then throw error when trying to add to player group", () => {
         const game = new Game();
         const player = new Player("MJ");
 
         game.addSpectator(player);
-        game.addPlayer(player);
 
-        expect(game.players.length).toEqual(1);
-        expect(game.players.includes(player)).toBe(true);
-        expect(game.spectators.length).toEqual(0);
-        expect(game.spectators.includes(player)).toBe(false);
+        expect(()=>{game.addPlayer(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
       });
 
       it("Removing player results in the player no longer being in the active player group", () => {

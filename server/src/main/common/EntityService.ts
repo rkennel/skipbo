@@ -21,11 +21,19 @@ export default class EntityService<T extends Entity> {
     }
 
     createNew(entity?:T): T {
-        if(!entity){
-            entity = this.createEntityFunc();
+
+        let entityForSave = this.validateNewCreation(entity);
+
+        if(!entityForSave){
+            entityForSave = this.createEntityFunc();
         }
 
-        this.entities.set(entity.id, entity);
+        this.entities.set(entityForSave.id, entityForSave);
+        return entityForSave;
+    }
+
+    validateNewCreation(entity: T):T {
+        //throw error if invalid
         return entity;
     }
 
@@ -56,4 +64,5 @@ export default class EntityService<T extends Entity> {
     validateUpdates(currentEntity: T, updatedEntity: T) {
         //throw error if you don't like the update
     }
+
 }

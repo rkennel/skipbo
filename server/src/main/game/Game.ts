@@ -4,6 +4,7 @@ import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";
 import Entity from "../common/Entity";
 import {generateUniqueId} from "../common/UniqueIdGenerator";
+import {DuplicateError} from "../common/Errors";
 
 export default class Game implements Entity {
 
@@ -25,7 +26,20 @@ export default class Game implements Entity {
       throw new Error("Maximum of 6 players is allowed");
     }
 
+    this.validatePlayerNameUniqueness(player);
+
     this.addPerson(player, this.players, this.spectators);
+  }
+
+  private validatePlayerNameUniqueness(person: Player) {
+    const people = this.players.concat(this.spectators);
+
+    for(let p of people){
+      if(p.name===person.name){
+        throw new DuplicateError(`Player name must be unique to the game. a player named "${person.name}" already exists`);
+      }
+    }
+
   }
 
   private addPerson(

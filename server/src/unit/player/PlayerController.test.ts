@@ -9,7 +9,7 @@ import {Card} from "../../main/gameplay/Card";
 
 describe("Player Rest Services", () => {
 
-    const entityName = new Player("Dikembe").entityName;
+    const entityName = Player.ENTITY_NAME;
     const server: SkipBoServer = new SkipBoServer();
 
     let game: Game;
@@ -44,6 +44,10 @@ describe("Player Rest Services", () => {
     };
 
     describe("Create and Read Tests", () => {
+
+        beforeEach(()=>{
+            clearAllPlayersAndSpectators();
+        });
 
         createAndReadTests(server, entityName, createPlayer);
 
@@ -93,6 +97,20 @@ describe("Player Rest Services", () => {
             expect(response.status).toEqual(400);
             expect(response.body.httpStatus).toEqual(400);
             expect(response.body.errorMessage).toEqual(`Maximum of 6 players is allowed`);
+        });
+
+        it("Cannot add player with same name to the same game",async ()=>{
+            const template = new Player("MJ");
+            template.gameid = game.id;
+
+            const mj = await createPlayerOnServer(server,Player.ENTITY_NAME,template);
+
+            const clone = template;
+            const response = await supertest(server.server).post(`/${entityName}`).send(clone).set('Accept', 'application/json');
+
+            expect(response.status).toEqual(409);
+            expect(response.body.httpStatus).toEqual(409);
+            expect(response.body.errorMessage).toEqual(`Player name must be unique to the game. a player named "${mj.name}" already exists`);
         });
 
     });

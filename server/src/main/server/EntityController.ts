@@ -4,7 +4,7 @@ import EntityServiceFactory from "../common/EntityServiceFactory";
 import Entity from "../common/Entity";
 import status from "statuses";
 import {ErrorResponse} from "./ErrorResponse";
-import {NotFoundError} from "../common/Errors";
+import {DuplicateError, NotFoundError} from "../common/Errors";
 
 /*
 Some Useful documentation
@@ -138,8 +138,11 @@ export default abstract class EntityController<T extends Entity> {
 
     private handleError(error: Error, res: Response, next: Next) {
         let httpStatus = status("bad request");
+
         if(error instanceof NotFoundError){
             httpStatus = status("not found");
+        } else if(error instanceof DuplicateError){
+            httpStatus = status("conflict");
         }
 
         const errorResponse = new ErrorResponse(httpStatus, error.message);

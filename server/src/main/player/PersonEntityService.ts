@@ -10,25 +10,28 @@ function getGameEntityService():EntityService<Game> {
 
 export default class PersonEntityService<T extends Player> extends EntityService<T> {
 
-    createNew(player: T):T {
-        if (!player.gameid) {
+    validateNewCreation(person: T):T {
+        if (!person.gameid) {
             throw new Error(`Must specify game for ${this.getEntityName()} to be added to`);
         }
 
         const gameService = EntityServiceFactory.getEntityService(new Game().entityName);
-        const game:Game = <Game>gameService.getById(player.gameid);
+        const game:Game = <Game>gameService.getById(person.gameid);
 
         if(!game){
-            throw new Error(`Game: ${player.gameid} does not exist`);
+            throw new Error(`Game: ${person.gameid} does not exist`);
         }
 
-        player.id = generateUniqueId();
+        person.id = generateUniqueId();
 
-        game.addPlayer(player);
+        if(this.getEntityName()===Player.ENTITY_NAME){
+            game.addPlayer(person);
+        }
+        else{
+            game.addSpectator(person);
+        }
 
-        this.entities.set(player.id,player);
-
-        return player;
+        return person;
     }
 
     deleteById(id:string) {
