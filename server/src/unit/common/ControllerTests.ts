@@ -40,12 +40,24 @@ export function createAndReadTests(server: SkipBoServer, entityName: string, cre
     });
 }
 
-export function updateTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity){
-    it(`I can create a ${entityName} using a put`, async () => {
-        const response: Response = await createEntity(server,entityName,createEntityFunc,false);
-        expect(response.status).toEqual(201);
-        expect(response.body.id).toBeDefined();
+export function updateTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity, updateEntityFunc: (entity:Entity)=> Entity){
+
+    it("Update method is not allowed on all entities",async ()=>{
+        const updateResponse: Response = await supertest(server.server).put(`/${entityName}`);
+        expect(updateResponse.status).toEqual(405);
     });
+
+    it(`I can update a ${entityName} using a put`, async () => {
+        const postResponse: Response = await createEntity(server,entityName,createEntityFunc);
+        const entityCreated = postResponse.body;
+
+        const updatedEntity = updateEntityFunc(entityCreated);
+        const response: Response = await supertest(server.server).put(`/${entityName}/${updatedEntity.id}`).send(updatedEntity);
+        expect(response.status).toEqual(200);
+        expect(response.body).toEqual(updatedEntity);
+    });
+
+
 }
 
 export function deleteTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity) {
