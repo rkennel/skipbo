@@ -15,12 +15,6 @@ export function createAndReadTests(server: SkipBoServer, entityName: string, cre
         expect(response.body.id).toBeDefined();
     });
 
-    it(`I can create a ${entityName} using a put`, async () => {
-        const response: Response = await createEntity(server,entityName,createEntityFunc,false);
-        expect(response.status).toEqual(201);
-        expect(response.body.id).toBeDefined();
-    });
-
     it(`After I create a ${entityName}, getAll returns at least one ${entityName}`, async () => {
 
         const postResponse: Response = await createEntity(server,entityName,createEntityFunc);
@@ -43,6 +37,14 @@ export function createAndReadTests(server: SkipBoServer, entityName: string, cre
     it(`If I ask for a ${entityName} that does not exist, then it will return a 404`, async () => {
         const getResponse: Response = await supertest(server.server).get(`/${entityName}/doesnotexist`);
         expect(getResponse.status).toEqual(404);
+    });
+}
+
+export function updateTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity){
+    it(`I can create a ${entityName} using a put`, async () => {
+        const response: Response = await createEntity(server,entityName,createEntityFunc,false);
+        expect(response.status).toEqual(201);
+        expect(response.body.id).toBeDefined();
     });
 }
 

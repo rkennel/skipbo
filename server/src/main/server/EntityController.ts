@@ -5,6 +5,11 @@ import Entity from "../common/Entity";
 import status from "statuses";
 import {ErrorResponse} from "./ErrorResponse";
 
+/*
+Some Useful documentation
+https://www.restapitutorial.com/lessons/httpmethods.html
+ */
+
 export default abstract class EntityController<T extends Entity> {
 
     entityService:EntityService<Entity>
@@ -20,22 +25,42 @@ export default abstract class EntityController<T extends Entity> {
     }
 
     registerRoute(server: Server) {
+        this.registerGetAll(server);
+
+        this.registerGetById(server);
+
+        this.registerCreateNew(server);
+
+        this.registerUpdate(server);
+
+        this.registerDelete(server);
+    }
+
+    registerGetAll(server: Server) {
         server.get(`/${this.getEntityName()}`, (req, res, next) => {
             this.getAll(req, res, next);
         });
+    }
 
+    registerGetById(server: Server) {
         server.get(`/${this.getEntityName()}/:id`, (req, res, next) => {
             this.getById(req, res, next);
         });
+    }
 
+    registerCreateNew(server: Server) {
         server.post(`/${this.getEntityName()}`, (req, res, next) => {
             this.createNew(req, res, next);
         });
+    }
 
+    registerUpdate(server: Server) {
         server.put(`/${this.getEntityName()}`, (req, res, next) => {
-            this.createNew(req, res, next);
+            res.send(status("method not allowed"));
         });
+    }
 
+    registerDelete(server: Server) {
         server.del(`/${this.getEntityName()}/:id`, (req, res, next) => {
             this.delete(req, res, next);
         });

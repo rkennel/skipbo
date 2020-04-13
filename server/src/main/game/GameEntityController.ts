@@ -7,4 +7,6 @@ export default class GameEntityController extends EntityController<Game>{
         super(Game.ENTITY_NAME);
     }
 
+
+
 }
