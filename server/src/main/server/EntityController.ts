@@ -76,7 +76,7 @@ export default abstract class EntityController<T extends Entity> {
         if(req.body){
             entity = <T>req.body;
         }
-        console.log(entity);
+
         try{
             const newEntity = this.entityService.createNew(entity);
             res.send(status("created"), newEntity);
