@@ -28,6 +28,7 @@ export default class SkipBoServer {
       this.server = restify.createServer();
       this.server.use(plugins.acceptParser(this.server.acceptable));
       this.server.use(plugins.bodyParser({ mapParams: true }));
+
       this.registerRoutes(this.server);
     }
     if (!this.isListening()) {
@@ -40,6 +41,12 @@ export default class SkipBoServer {
   }
 
   private registerRoutes(server: Server) {
+
+    this.server.pre(function (req, res, next) {
+      console.log(req);
+      next();
+    });
+
     server.get("/health", (req, res, next) => {
       res.send("SkipBo Server is up and running");
       next();

@@ -3,7 +3,6 @@ import {createAndReadTests, deleteTests} from "../common/ControllerTests";
 import Game from "../../main/game/Game";
 import Player from "../../main/player/Player";
 import supertest, {Response} from "supertest";
-import EntityServiceFactory from "../../main/common/EntityServiceFactory";
 import {clearAllEntities} from "../common/EntityUtils";
 
 describe("Player Rest Services", () => {
@@ -27,7 +26,7 @@ describe("Player Rest Services", () => {
 
     const createPlayer = () => {
         counter++;
-        const player = new Player("Player " + counter);
+        const player = <Player>{name:"Player " + counter};
         player.gameid = game.id;
         return player;
     };

@@ -13,6 +13,7 @@ export function createAndReadTests(server: SkipBoServer, entityName: string, cre
         const response: Response = await createEntity(server,entityName,createEntityFunc);
         expect(response.status).toEqual(201);
         expect(response.body.id).toBeDefined();
+        console.log(response.body);
     });
 
     it(`After I create a ${entityName}, getAll returns at least one ${entityName}`, async () => {

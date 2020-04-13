@@ -2,6 +2,7 @@ import EntityService from "../common/EntityService";
 import Player from "./Player";
 import Game from "../game/Game";
 import EntityServiceFactory from "../common/EntityServiceFactory";
+import {generateUniqueId} from "../common/UniqueIdGenerator";
 
 export default class PlayerEntityService extends EntityService<Player> {
 
@@ -26,6 +27,8 @@ export default class PlayerEntityService extends EntityService<Player> {
         if(!game){
             throw new Error(`Game: ${player.gameid} does not exist`);
         }
+
+        player.id = generateUniqueId();
 
         game.addPlayer(player);
 
