@@ -3,7 +3,7 @@ import {createAndReadTests, createEntity, deleteTests} from "../common/Controlle
 import Game from "../../main/game/Game";
 import {clearAllEntities} from "../common/EntityUtils";
 import supertest, {Response} from "supertest";
-import Player from "../../main/player/Player";
+import Player from "../../main/person/Player";
 
 describe("Game Rest Services", () => {
 

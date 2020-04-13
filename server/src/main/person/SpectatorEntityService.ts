@@ -1,5 +1,5 @@
 import Spectator from "./Specatator";
-import PersonEntityService from "../player/PersonEntityService";
+import PersonEntityService from "./PersonEntityService";
 
 export default class SpectatorEntityService extends PersonEntityService<Spectator> {
 

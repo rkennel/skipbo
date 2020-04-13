@@ -1,4 +1,4 @@
-import Player from "../player/Player";
+import Player from "../person/Player";
 import Deck from "../gameplay/Deck";
 import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";

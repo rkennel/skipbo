@@ -2,8 +2,8 @@ import EntityServiceFactory from "../../main/common/EntityServiceFactory";
 import Game from "../../main/game/Game";
 import EntityService from "../../main/common/EntityService";
 import {clearAllEntities} from "../common/EntityUtils";
-import PlayerEntityService from "../../main/player/PlayerEntityService";
-import Player from "../../main/player/Player";
+import PlayerEntityService from "../../main/person/PlayerEntityService";
+import Player from "../../main/person/Player";
 
 
 describe("Person Entity Service", () => {

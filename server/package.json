@@ -4,6 +4,7 @@
   "description": "Project to learn TypeScript and Websockets using Mattel's popular card game as a learning medium.  Skip-Bo is a registered trademark of Mattel and a lot of fun to play.  To purchase, go to: https://www.mattelgames.com/en-us/cards/skip-bo",
   "main": "index.js",
   "scripts": {
+    "clearJestCache": "jest --clearCache",
     "lint": "eslint ./src/**/*.ts --fix",
     "prebuild": "npm run lint",
     "build": "tsc",

@@ -1,8 +1,8 @@
 import GameEntityController from "../game/GameEntityController";
 import EntityController from "../server/EntityController";
 import Entity from "./Entity";
-import PlayerEntityController from "../player/PlayerEntityController";
-import SpectatorEntityController from "../spectator/SpectatorEntityController";
+import PlayerEntityController from "../person/PlayerEntityController";
+import SpectatorEntityController from "../person/SpectatorEntityController";
 
 export default class EntityControllerFactory {
 

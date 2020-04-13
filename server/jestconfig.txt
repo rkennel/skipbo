@@ -1,0 +1,126 @@
+{
+  "configs": [
+    {
+      "automock": false,
+      "browser": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/p1/5pl999xd37904kc8gl8rpynr0000gn/T/jest_dx",
+      "clearMocks": false,
+      "coveragePathIgnorePatterns": [
+        "/node_modules/",
+        "/src/unit/",
+        "/src/e2e"
+      ],
+      "cwd": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extraGlobals": [],
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "providesModuleNodeModules": [],
+        "throwOnModuleCollision": false
+      },
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "json",
+        "jsx",
+        "ts",
+        "tsx",
+        "node"
+      ],
+      "moduleNameMapper": [],
+      "modulePathIgnorePatterns": [],
+      "name": "1e88c0ce5fa77576d3d6c613d04647b5",
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server",
+      "roots": [
+        "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server"
+      ],
+      "runner": "jest-runner",
+      "setupFiles": [],
+      "setupFilesAfterEnv": [],
+      "skipFilter": false,
+      "snapshotSerializers": [],
+      "testEnvironment": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server/node_modules/jest-environment-node/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server/node_modules/jest-jasmine2/build/index.js",
+      "testURL": "http://localhost",
+      "timers": "real",
+      "transform": [
+        [
+          "^.+\\.tsx?$",
+          "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server/node_modules/ts-jest/dist/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "watchPathIgnorePatterns": []
+    }
+  ],
+  "globalConfig": {
+    "bail": 0,
+    "changedFilesWithAncestor": false,
+    "collectCoverage": true,
+    "collectCoverageFrom": [],
+    "coverageDirectory": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server/coverage",
+    "coverageProvider": "babel",
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "detectLeaks": false,
+    "detectOpenHandles": false,
+    "errorOnDeprecated": false,
+    "expand": false,
+    "findRelatedTests": false,
+    "forceExit": false,
+    "json": false,
+    "lastCommit": false,
+    "listTests": false,
+    "logHeapUsage": false,
+    "maxConcurrency": 5,
+    "maxWorkers": 7,
+    "noStackTrace": false,
+    "nonFlagArgs": [],
+    "notify": false,
+    "notifyMode": "failure-change",
+    "onlyChanged": false,
+    "onlyFailures": false,
+    "passWithNoTests": false,
+    "projects": [],
+    "rootDir": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server",
+    "runTestsByPath": false,
+    "skipFilter": false,
+    "testFailureExitCode": 1,
+    "testPathPattern": "",
+    "testSequencer": "/Volumes/external_os/Users/rkennel/Workspaces/skipbo/server/node_modules/@jest/test-sequencer/build/index.js",
+    "updateSnapshot": "new",
+    "useStderr": false,
+    "watch": false,
+    "watchAll": false,
+    "watchman": true
+  },
+  "version": "25.3.0"
+}

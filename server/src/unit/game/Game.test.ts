@@ -1,5 +1,5 @@
 import Game from "../../main/game/Game";
-import Player from "../../main/player/Player";
+import Player from "../../main/person/Player";
 import {clearAllEntities} from "../common/EntityUtils";
 import {DuplicateError} from "../../main/common/Errors";
 

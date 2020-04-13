@@ -1,7 +1,7 @@
 import EntityServiceFactory from "../../main/common/EntityServiceFactory";
-import PlayerEntityService from "../../main/player/PlayerEntityService";
-import Player from "../../main/player/Player";
-import Spectator from "../../main/spectator/Specatator";
+import PlayerEntityService from "../../main/person/PlayerEntityService";
+import Player from "../../main/person/Player";
+import Spectator from "../../main/person/Specatator";
 
 export function clearAllEntities(){
 

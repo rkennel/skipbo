@@ -2,7 +2,7 @@ import supertest, {Response} from "supertest";
 import SkipBoServer from "../../main/server/SkipBoServer";
 import Entity from "../../main/common/Entity";
 import EntityServiceFactory from "../../main/common/EntityServiceFactory";
-import Player from "../../main/player/Player";
+import Player from "../../main/person/Player";
 
 export function createAndReadTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity) {
     it("Before any data has been added, get returns an empty list", async () => {

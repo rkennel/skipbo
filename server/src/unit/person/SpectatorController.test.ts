@@ -3,8 +3,8 @@ import {createAndReadTests, deleteTests, updateTests} from "../common/Controller
 import Game from "../../main/game/Game";
 import supertest, {Response} from "supertest";
 import {clearAllEntities, clearAllPlayersAndSpectators} from "../common/EntityUtils";
-import Spectator from "../../main/spectator/Specatator";
-import Player from "../../main/player/Player";
+import Spectator from "../../main/person/Specatator";
+import Player from "../../main/person/Player";
 import {Card} from "../../main/gameplay/Card";
 import Entity from "../../main/common/Entity";
 
