@@ -1,8 +1,8 @@
-import EntityService from "../common/EntityService";
+import EntityService from "../entity/EntityService";
 import Player from "./Player";
 import Game from "../game/Game";
-import EntityServiceFactory from "../common/EntityServiceFactory";
-import {generateUniqueId} from "../common/UniqueIdGenerator";
+import EntityServiceFactory from "../entity/EntityServiceFactory";
+import {generateUniqueId} from "../entity/UniqueIdGenerator";
 
 function getGameEntityService():EntityService<Game> {
     return <EntityService<Game>>EntityServiceFactory.getEntityService(Game.ENTITY_NAME);

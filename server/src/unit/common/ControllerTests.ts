@@ -1,7 +1,7 @@
 import supertest, {Response} from "supertest";
 import SkipBoServer from "../../main/server/SkipBoServer";
-import Entity from "../../main/common/Entity";
-import EntityServiceFactory from "../../main/common/EntityServiceFactory";
+import Entity from "../../main/entity/Entity";
+import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
 import Player from "../../main/person/Player";
 
 export function createAndReadTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity) {

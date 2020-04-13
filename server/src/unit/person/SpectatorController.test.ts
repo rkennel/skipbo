@@ -2,11 +2,11 @@ import SkipBoServer from "../../main/server/SkipBoServer";
 import {createAndReadTests, deleteTests, updateTests} from "../common/ControllerTests";
 import Game from "../../main/game/Game";
 import supertest, {Response} from "supertest";
-import {clearAllEntities, clearAllPlayersAndSpectators} from "../common/EntityUtils";
+import {clearAllEntities, clearAllPlayersAndSpectators} from "../entity/EntityUtils";
 import Spectator from "../../main/person/Specatator";
 import Player from "../../main/person/Player";
 import {Card} from "../../main/gameplay/Card";
-import Entity from "../../main/common/Entity";
+import Entity from "../../main/entity/Entity";
 
 describe("Player Rest Services", () => {
 

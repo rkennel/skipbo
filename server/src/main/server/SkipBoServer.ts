@@ -1,6 +1,6 @@
 import * as restify from "restify";
 import {Server,plugins} from "restify";
-import EntityControllerFactory from "../common/EntityControllerFactory";
+import EntityControllerFactory from "../entity/EntityControllerFactory";
 
 const PORT = process.env.PORT || 8080;
 

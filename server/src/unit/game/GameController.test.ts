@@ -1,7 +1,7 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
 import {createAndReadTests, createEntity, deleteTests} from "../common/ControllerTests";
 import Game from "../../main/game/Game";
-import {clearAllEntities} from "../common/EntityUtils";
+import {clearAllEntities} from "../entity/EntityUtils";
 import supertest, {Response} from "supertest";
 import Player from "../../main/person/Player";
 

@@ -1,7 +1,7 @@
-import EntityServiceFactory from "../../main/common/EntityServiceFactory";
+import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
 import Game from "../../main/game/Game";
-import EntityService from "../../main/common/EntityService";
-import {clearAllEntities} from "../common/EntityUtils";
+import EntityService from "../../main/entity/EntityService";
+import {clearAllEntities} from "../entity/EntityUtils";
 import PlayerEntityService from "../../main/person/PlayerEntityService";
 import Player from "../../main/person/Player";
 

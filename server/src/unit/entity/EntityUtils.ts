@@ -1,4 +1,4 @@
-import EntityServiceFactory from "../../main/common/EntityServiceFactory";
+import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
 import PlayerEntityService from "../../main/person/PlayerEntityService";
 import Player from "../../main/person/Player";
 import Spectator from "../../main/person/Specatator";

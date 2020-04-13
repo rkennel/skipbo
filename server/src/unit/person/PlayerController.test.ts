@@ -3,8 +3,8 @@ import {createAndReadTests, deleteTests, updateTests} from "../common/Controller
 import Game from "../../main/game/Game";
 import Player from "../../main/person/Player";
 import supertest, {Response} from "supertest";
-import {clearAllEntities, clearAllPlayersAndSpectators} from "../common/EntityUtils";
-import Entity from "../../main/common/Entity";
+import {clearAllEntities, clearAllPlayersAndSpectators} from "../entity/EntityUtils";
+import Entity from "../../main/entity/Entity";
 import {Card} from "../../main/gameplay/Card";
 
 describe("Player Rest Services", () => {
@@ -112,6 +112,21 @@ describe("Player Rest Services", () => {
             expect(response.body.httpStatus).toEqual(409);
             expect(response.body.errorMessage).toEqual(`Player name must be unique to the game. a player named "${mj.name}" already exists`);
         });
+
+        it("Adding new player intializes all of their cards to empty arrays",async ()=>{
+            const player = {
+              name: "MJ",
+              gameid: game.id
+            };
+            const postResponse = await supertest(server.server).post(`/${entityName}`).send(player).set('Accept', 'application/json');
+
+            expect(postResponse.status).toEqual(201);
+
+            const returnedPlayer:Player = <Player>postResponse.body;
+            expect(returnedPlayer.discardPiles=[[], [], [], []]);
+            expect(returnedPlayer.hand=[]);
+            expect(returnedPlayer.stockpile=[]);
+        })
 
     });
 

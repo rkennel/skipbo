@@ -1,6 +1,6 @@
 import Game from "../../main/game/Game";
 import Player from "../../main/person/Player";
-import {clearAllEntities} from "../common/EntityUtils";
+import {clearAllEntities} from "../entity/EntityUtils";
 import {DuplicateError} from "../../main/common/Errors";
 
 describe("Playing the game", () => {

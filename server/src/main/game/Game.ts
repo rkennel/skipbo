@@ -2,8 +2,8 @@ import Player from "../person/Player";
 import Deck from "../gameplay/Deck";
 import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";
-import Entity from "../common/Entity";
-import {generateUniqueId} from "../common/UniqueIdGenerator";
+import Entity from "../entity/Entity";
+import {generateUniqueId} from "../entity/UniqueIdGenerator";
 import {DuplicateError} from "../common/Errors";
 
 export default class Game implements Entity {

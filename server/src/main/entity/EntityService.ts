@@ -1,5 +1,5 @@
 import Entity from "./Entity";
-import {NotFoundError} from "./Errors";
+import {NotFoundError} from "../common/Errors";
 
 export default class EntityService<T extends Entity> {
 

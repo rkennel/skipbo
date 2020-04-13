@@ -1,6 +1,6 @@
 import { Card } from "../gameplay/Card";
-import Entity from "../common/Entity";
-import {generateUniqueId} from "../common/UniqueIdGenerator";
+import Entity from "../entity/Entity";
+import {generateUniqueId} from "../entity/UniqueIdGenerator";
 
 export default class Player implements Entity{
 
