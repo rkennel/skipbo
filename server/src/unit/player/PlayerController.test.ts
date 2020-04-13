@@ -109,6 +109,16 @@ describe("Player Rest Services", () => {
 
         describe("Cheater trying to update something other than their name", ()=>{
 
+            it("Updating game id throws a 400 error",async ()=>{
+                player.gameid = "newgameid";
+                const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
+
+                expect(putResponse.status).toEqual(400);
+                expect(putResponse.body.httpStatus).toEqual(400);
+                expect(putResponse.body.errorMessage).toEqual(`Cannot update game id via this method`);
+            });
+
+
             it("Updating stock pile cards throws a 400 error",async ()=>{
                 player.stockpile = [Card.SKIP_BO];
 

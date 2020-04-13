@@ -63,6 +63,9 @@ export default class PersonEntityService<T extends Player> extends EntityService
 
 
     validateUpdates(currentEntity: T, updatedEntity: T) {
+        if(currentEntity.gameid!=updatedEntity.gameid){
+            throw new Error("Cannot update game id via this method");
+        }
         if(currentEntity.stockpile!=updatedEntity.stockpile){
             throw new Error("Cannot update player stockpiles via this method");
         }
