@@ -39,7 +39,7 @@ describe("Person Entity Service", () => {
         });
     });
 
-    describe("Deleting a player", () => {
+    describe("Deleting all players", () => {
 
         let player2Id:string;
 
@@ -73,6 +73,7 @@ describe("Person Entity Service", () => {
 });
 
 function createPlayer(game: Game, name: string): Player {
+    console.log(name);
     const playerEntityService = <PlayerEntityService>EntityServiceFactory.getEntityService(Player.ENTITY_NAME);
     const player = new Player(name);
     player.gameid = game.id;

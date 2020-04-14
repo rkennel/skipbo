@@ -1,6 +1,8 @@
 import Player from "./Player";
 import PersonEntityService from "./PersonEntityService";
 import Game from "../game/Game";
+import {generateUniqueId} from "../entity/UniqueIdGenerator";
+import { isEqual } from "lodash";
 
 export default class PlayerEntityService extends PersonEntityService<Player> {
 
@@ -8,6 +10,20 @@ export default class PlayerEntityService extends PersonEntityService<Player> {
         super(Player.ENTITY_NAME, () => {
             return new Player()
         });
+    }
+
+    validateNewCreation(player: Player):Player {
+        if(!(isEqual(player.stockpile,[])||(!player.stockpile))){
+            throw new Error("Cannot set player stockpiles via this method");
+        }
+        if(!(isEqual(player.hand,[])||(!player.hand))){
+            throw new Error("Cannot set player hand via this method");
+        }
+        if(!(isEqual(player.discardPiles,[[],[],[],[]])||(!player.discardPiles))){
+            throw new Error("Cannot set player discard piles via this method");
+        }
+
+        return(super.validateNewCreation(player));
     }
 
     addPersonToGame(player: Player, game: Game): Player {
@@ -24,13 +40,13 @@ export default class PlayerEntityService extends PersonEntityService<Player> {
         super.validateUpdates(currentEntity,updatedEntity);
 
         if(currentEntity.stockpile!=updatedEntity.stockpile){
-            throw new Error("Cannot update player stockpiles via this method");
+            throw new Error("Cannot set player stockpiles via this method");
         }
         if(currentEntity.hand!=updatedEntity.hand){
-            throw new Error("Cannot update player hand via this method");
+            throw new Error("Cannot set player hand via this method");
         }
         if(currentEntity.discardPiles!=updatedEntity.discardPiles){
-            throw new Error("Cannot update player discard piles via this method");
+            throw new Error("Cannot set player discard piles via this method");
         }
     }
 

@@ -70,71 +70,27 @@ export function personEntityTests(entityName: string) {
             expect(response.body.httpStatus).toEqual(400);
             expect(response.body.errorMessage).toEqual(`Game: ${person.gameid} does not exist`);
         });
+
+        describe("Cheater trying to update something other than their name", () => {
+            cheaterTests(
+                entityName,
+                createPerson,
+                (person) => supertest(server.server).post(`/${entityName}`).send(person),
+                undefined //this signals test of create not update actions
+            );
+        });
     });
 
     describe("Update tests", () => {
         updateTests(server, entityName, createPerson, updatePerson);
 
-        let person: Person;
-
-        beforeEach(async () => {
-            clearAllPlayersAndSpectators();
-            person = await createSpectatorOnServer(server, entityName, createPerson());
-        });
-
         describe("Cheater trying to update something other than their name", () => {
-
-            it("Updating game id throws a 400 error", async () => {
-                person.gameid = "newgameid";
-                const putResponse = await supertest(server.server).put(`/${entityName}/${person.id}`).send(person);
-
-                expect(putResponse.status).toEqual(400);
-                expect(putResponse.body.httpStatus).toEqual(400);
-                expect(putResponse.body.errorMessage).toEqual(`Cannot update game id via this method`);
-            });
-
-            if (entityName === Player.ENTITY_NAME) {
-
-
-                it("Updating stock pile cards throws a 400 error", async () => {
-                    const player = <Player>person;
-                    player.stockpile = [Card.SKIP_BO];
-
-                    const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
-
-                    expect(putResponse.status).toEqual(400);
-                    expect(putResponse.body.httpStatus).toEqual(400);
-                    expect(putResponse.body.errorMessage).toEqual(`Cannot update player stockpiles via this method`);
-                });
-
-                it("Updating hand cards throws a 400 error", async () => {
-                    const player = <Player>person;
-                    player.hand = [Card.SKIP_BO];
-
-                    const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
-
-                    expect(putResponse.status).toEqual(400);
-                    expect(putResponse.body.httpStatus).toEqual(400);
-                    expect(putResponse.body.errorMessage).toEqual(`Cannot update player hand via this method`);
-                });
-
-                it("Updating discard pile cards throws a 400 error", async () => {
-                    const player = <Player>person;
-                    player.discardPiles = [
-                        [Card.SKIP_BO],
-                        [Card.SKIP_BO],
-                        [Card.SKIP_BO],
-                        [Card.SKIP_BO]
-                    ];
-
-                    const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
-
-                    expect(putResponse.status).toEqual(400);
-                    expect(putResponse.body.httpStatus).toEqual(400);
-                    expect(putResponse.body.errorMessage).toEqual(`Cannot update player discard piles via this method`);
-                });
-
-            }
+            cheaterTests(
+                entityName,
+                createPerson,
+                (person) => supertest(server.server).post(`/${entityName}`).send(person),
+                (person) => supertest(server.server).put(`/${entityName}/${person.id}`).send(person)
+            );
         });
 
     });
@@ -152,7 +108,7 @@ async function createNewGame(server: SkipBoServer): Promise<Game> {
 }
 
 
-async function createSpectatorOnServer(server: SkipBoServer, entityName: string, spectator: Spectator): Promise<Spectator> {
+async function createPersonOnServer(server: SkipBoServer, entityName: string, spectator: Spectator): Promise<Spectator> {
     const postResponse = await supertest(server.server).post(`/${entityName}`).send(spectator).set('Accept', 'application/json');
 
     if (postResponse.status != 201) {
@@ -160,4 +116,86 @@ async function createSpectatorOnServer(server: SkipBoServer, entityName: string,
     }
 
     return <Spectator>postResponse.body;
+}
+
+async function cheaterTests(entityName: string,
+                            createPerson: () => Person,
+                            createAction: (person: Person) => Promise<Response>,
+                            updateAction: (person: Person) => Promise<Response>
+) {
+
+    const performingUpdate = updateAction ? true : false;
+    const restAction = performingUpdate ? updateAction : createAction;
+    let person: Person;
+
+    beforeEach(async () => {
+        clearAllPlayersAndSpectators();
+
+        if (performingUpdate) {
+            const postResponse = await createAction(createPerson());
+
+            if (postResponse.status != 201) {
+                throw new Error("Error creating person");
+            }
+
+            person = <Person>postResponse.body;
+
+        } else {
+            person = createPerson();
+        }
+
+    });
+
+    if (performingUpdate) {
+        it("Updating game id throws a 400 error", async () => {
+            person.gameid = "newgameid";
+            const putResponse = await restAction(person);
+
+            expect(putResponse.status).toEqual(400);
+            expect(putResponse.body.httpStatus).toEqual(400);
+            expect(putResponse.body.errorMessage).toEqual(`Cannot update game id via this method`);
+        });
+    }
+
+    if (entityName === Player.ENTITY_NAME) {
+
+        it("Setting stock pile cards throws a 400 error", async () => {
+            const player = <Player>person;
+            player.stockpile = [Card.SKIP_BO];
+
+            const response = await restAction(player);
+
+            expect(response.status).toEqual(400);
+            expect(response.body.httpStatus).toEqual(400);
+            expect(response.body.errorMessage).toEqual(`Cannot set player stockpiles via this method`);
+        });
+
+        it("Setting hand cards throws a 400 error", async () => {
+            const player = <Player>person;
+            player.hand = [Card.SKIP_BO];
+
+            const response = await restAction(player);
+
+            expect(response.status).toEqual(400);
+            expect(response.body.httpStatus).toEqual(400);
+            expect(response.body.errorMessage).toEqual(`Cannot set player hand via this method`);
+        });
+
+        it("Setting discard pile cards throws a 400 error", async () => {
+            const player = <Player>person;
+            player.discardPiles = [
+                [Card.SKIP_BO],
+                [Card.SKIP_BO],
+                [Card.SKIP_BO],
+                [Card.SKIP_BO]
+            ];
+
+            const response = await restAction(player);
+
+            expect(response.status).toEqual(400);
+            expect(response.body.httpStatus).toEqual(400);
+            expect(response.body.errorMessage).toEqual(`Cannot set player discard piles via this method`);
+        });
+
+    }
 }
