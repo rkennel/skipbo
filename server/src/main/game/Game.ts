@@ -5,6 +5,8 @@ import { isEqual } from "lodash";
 import Entity from "../entity/Entity";
 import {generateUniqueId} from "../entity/UniqueIdGenerator";
 import {DuplicateError} from "../common/Errors";
+import Spectator from "../person/Specatator";
+import Person from "../person/Person";
 
 export default class Game implements Entity {
 
@@ -29,7 +31,7 @@ export default class Game implements Entity {
     this.addPerson(player, this.players);
   }
 
-  private validatePlayerNameUniqueness(person: Player) {
+  private validatePersonNameUniqueness(person: Person) {
     const people = this.players.concat(this.spectators);
 
     for(let p of people){
@@ -41,16 +43,16 @@ export default class Game implements Entity {
   }
 
   private addPerson(
-    player: Player,
-    players: Player[],
+    person: Person,
+    persons: Person[],
   ) {
 
-    this.validatePlayerNameUniqueness(player);
+    this.validatePersonNameUniqueness(person);
 
-    if (!players.includes(player)) {
-      players.push(player);
+    if (!persons.includes(person)) {
+      persons.push(person);
     }
-    player.gameid=this.id;
+    person.gameid=this.id;
   }
 
   removeAllPlayers() {
@@ -64,17 +66,17 @@ export default class Game implements Entity {
     this.removePerson(player, this.players);
   }
 
-  private removePerson(player: Player, players: Player[]) {
-    const index = this.findPlayerIndex(player, players);
+  private removePerson(person: Person, persons: Person[]) {
+    const index = this.findPlayerIndex(person, persons);
     if (index > -1) {
-      players.splice(index, 1);
+      persons.splice(index, 1);
     }
-    player.gameid = undefined;
+    person.gameid = undefined;
   }
 
-  private findPlayerIndex(player: Player, players: Player[]): number {
-    for (let i = 0; i < players.length; i++) {
-      if (isEqual(player, players[i])) {
+  private findPlayerIndex(person: Person, persons: Person[]): number {
+    for (let i = 0; i < persons.length; i++) {
+      if (isEqual(person, persons[i])) {
         return i;
       }
     }
@@ -82,19 +84,20 @@ export default class Game implements Entity {
     return -1;
   }
 
-  addSpectator(player: Player): void {
-    this.addPerson(player, this.spectators);
+  addSpectator(spectator: Spectator): void {
+    this.addPerson(spectator, this.spectators);
   }
 
   removeAllSpectators() {
-    for(let player of this.spectators){
-      player.id = undefined;
+    for(let spectator of this.spectators){
+      spectator.id = undefined;
     }
+
     this.spectators = [];
   }
 
-  removeSpectator(player: Player) {
-    this.removePerson(player, this.spectators);
+  removeSpectator(spectator: Spectator) {
+    this.removePerson(spectator, this.spectators);
   }
 
   start() {

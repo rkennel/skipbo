@@ -8,9 +8,8 @@ import Player from "../../main/person/Player";
 import {Card} from "../../main/gameplay/Card";
 import Entity from "../../main/entity/Entity";
 
-describe("Player Rest Services", () => {
+export function personEntityTests(entityName:string){
 
-    const entityName = "spectator";
     const server: SkipBoServer = new SkipBoServer();
 
     let game: Game;
@@ -27,21 +26,21 @@ describe("Player Rest Services", () => {
         clearAllEntities();
     });
 
-    const createSpectator = () => {
+    const createPerson = () => {
         counter++;
         const spectator = <Spectator>{name: "Spectator " + counter};
         spectator.gameid = game.id;
         return spectator;
     };
 
-    const updateSpectator = (entity: Entity) => {
-        const spectator: Spectator = <Spectator>entity;
+    const updatePerson = (entity: Entity) => {
+        const spectator: Player = <Spectator>entity;
         spectator.name = `${spectator.name} modified`;
         return spectator;
     };
 
     describe("Create and Read Tests", () => {
-        createAndReadTests(server, entityName, createSpectator);
+        createAndReadTests(server, entityName, createPerson);
 
         it("Fails to add spectator if a game id is not specified", async () => {
             const spectator = new Spectator("Pelé");
@@ -65,13 +64,13 @@ describe("Player Rest Services", () => {
     });
 
     describe("Update tests", () => {
-        updateTests(server, entityName, createSpectator, updateSpectator);
+        updateTests(server, entityName, createPerson, updatePerson);
 
-        let player: Spectator;
+        let player: Player;
 
         beforeEach(async () => {
             clearAllPlayersAndSpectators();
-            player = await createSpectatorOnServer(server, Spectator.ENTITY_NAME, createSpectator());
+            player = await createSpectatorOnServer(server, Spectator.ENTITY_NAME, createPerson());
         });
 
         describe("Cheater trying to update something other than their name", () => {
@@ -85,14 +84,49 @@ describe("Player Rest Services", () => {
                 expect(putResponse.body.errorMessage).toEqual(`Cannot update game id via this method`);
             });
 
+
+            it("Updating stock pile cards throws a 400 error", async () => {
+                player.stockpile = [Card.SKIP_BO];
+
+                const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
+
+                expect(putResponse.status).toEqual(400);
+                expect(putResponse.body.httpStatus).toEqual(400);
+                expect(putResponse.body.errorMessage).toEqual(`Cannot update player stockpiles via this method`);
+            });
+
+            it("Updating hand cards throws a 400 error", async () => {
+                player.hand = [Card.SKIP_BO];
+
+                const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
+
+                expect(putResponse.status).toEqual(400);
+                expect(putResponse.body.httpStatus).toEqual(400);
+                expect(putResponse.body.errorMessage).toEqual(`Cannot update player hand via this method`);
+            });
+
+            it("Updating discard pile cards throws a 400 error", async () => {
+                player.discardPiles = [
+                    [Card.SKIP_BO],
+                    [Card.SKIP_BO],
+                    [Card.SKIP_BO],
+                    [Card.SKIP_BO]
+                ];
+
+                const putResponse = await supertest(server.server).put(`/${entityName}/${player.id}`).send(player);
+
+                expect(putResponse.status).toEqual(400);
+                expect(putResponse.body.httpStatus).toEqual(400);
+                expect(putResponse.body.errorMessage).toEqual(`Cannot update player discard piles via this method`);
+            });
         });
 
     });
 
     describe("Delete Tests", () => {
-        deleteTests(server, entityName, createSpectator);
+        deleteTests(server, entityName, createPerson);
     });
-});
+};
 
 async function createNewGame(server: SkipBoServer): Promise<Game> {
     await supertest(server.server).post("/game");

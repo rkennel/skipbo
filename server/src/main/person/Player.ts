@@ -1,16 +1,11 @@
 import { Card } from "../gameplay/Card";
 import Entity from "../entity/Entity";
 import {generateUniqueId} from "../entity/UniqueIdGenerator";
+import Person from "./Person";
 
-export default class Player implements Entity{
+export default class Player extends Person {
 
   static ENTITY_NAME: string = "player";
-
-  id: string;
-  name: string;
-  gameid: string;
-
-  entityName = "player";
 
   stockpile: Card[] = [];
 
@@ -19,8 +14,8 @@ export default class Player implements Entity{
   discardPiles: Card[][] = [[], [], [], []];
 
   constructor(name: string="marty") {
-    this.name = name;
-    this.id = generateUniqueId();
+    super(name);
+    this.entityName = Player.ENTITY_NAME;
   }
 
 }
