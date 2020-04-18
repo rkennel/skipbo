@@ -1,10 +1,9 @@
-import Deck from "../gameplay/Deck";
 import { Card } from "../gameplay/Card";
 import { isEqual } from "lodash";
 import Entity from "../entity/Entity";
 import {generateUniqueId} from "../entity/UniqueIdGenerator";
 import {DuplicateError} from "../common/Errors";
-import {Person, Player, Spectator} from "skipbo-common";
+import {Deck, Person, Player, Spectator} from "skipbo-common";
 
 export default class Game implements Entity {
 
