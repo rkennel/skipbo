@@ -1,6 +1,5 @@
-import { Card } from "../../main/gameplay/Card";
 import { cloneDeep } from "lodash";
-import {Deck} from "skipbo-common";
+import {Card, Deck} from "skipbo-common";
 
 describe("Card Deck Functionality", () => {
   describe("Fresh deck", () => {

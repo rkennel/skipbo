@@ -3,9 +3,8 @@ import {createAndReadTests, deleteTests, updateTests} from "../common/Controller
 import Game from "../../main/game/Game";
 import supertest, {Response} from "supertest";
 import {clearAllEntities, clearAllPlayersAndSpectators} from "../entity/EntityUtils";
-import {Card} from "../../main/gameplay/Card";
 import Entity from "../../main/entity/Entity";
-import {Person, Player, Spectator} from "skipbo-common";
+import {Card, Person, Player, Spectator} from "skipbo-common";
 
 export function personEntityTests(entityName: string) {
 
