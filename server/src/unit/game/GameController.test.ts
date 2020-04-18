@@ -1,9 +1,8 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
 import {createAndReadTests, createEntity, deleteTests} from "../common/ControllerTests";
-import Game from "../../main/game/Game";
 import {clearAllEntities} from "../entity/EntityUtils";
 import supertest, {Response} from "supertest";
-import {Player} from "skipbo-common";
+import {Game, Player} from "skipbo-common";
 
 describe("Game Rest Services", () => {
 

@@ -1,7 +1,8 @@
 import PersonEntityService from "./PersonEntityService";
-import Game from "../game/Game";
 import {isEqual} from "lodash";
-import {Player} from "skipbo-common";
+import {Game, Player} from "skipbo-common";
+import GameEntityService from "../game/GameEntityService";
+import EntityServiceFactory from "../entity/EntityServiceFactory";
 
 export default class PlayerEntityService extends PersonEntityService<Player> {
 
@@ -26,12 +27,14 @@ export default class PlayerEntityService extends PersonEntityService<Player> {
     }
 
     addPersonToGame(player: Player, game: Game): Player {
-        game.addPlayer(player);
+        const gameEntityService:GameEntityService = this.getGameEntityService();
+        gameEntityService.addPlayer(game,player);
         return player;
     }
 
     removePersonFromGame(player: Player, game: Game): Player {
-        game.removePlayer(player);
+        const gameEntityService = this.getGameEntityService();
+        gameEntityService.removePlayer(game,player);
         return player;
     }
 

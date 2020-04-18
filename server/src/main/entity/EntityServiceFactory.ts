@@ -1,8 +1,8 @@
 import EntityService from "./EntityService";
-import Game from "../game/Game";
 import PlayerEntityService from "../person/PlayerEntityService";
 import SpectatorEntityService from "../person/SpectatorEntityService";
 import {Entity} from "skipbo-common";
+import GameEntityService from "../game/GameEntityService";
 
 export default class EntityServiceFactory {
 
@@ -15,7 +15,7 @@ export default class EntityServiceFactory {
         }
 
         const map:Map<string,EntityService<Entity>> = new Map();
-        addService(new EntityService<Game>(Game.ENTITY_NAME,()=>new Game()));
+        addService(new GameEntityService());
         addService(new PlayerEntityService());
         addService(new SpectatorEntityService());
         return map;

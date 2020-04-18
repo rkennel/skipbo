@@ -1,6 +1,5 @@
 import PersonEntityService from "./PersonEntityService";
-import Game from "../game/Game";
-import {Spectator} from "skipbo-common";
+import {Game, Spectator} from "skipbo-common";
 
 export default class SpectatorEntityService extends PersonEntityService<Spectator> {
 
@@ -11,12 +10,12 @@ export default class SpectatorEntityService extends PersonEntityService<Spectato
     }
 
     addPersonToGame(spectator: Spectator, game: Game): Spectator {
-        game.addSpectator(spectator);
+        this.getGameEntityService().addSpectator(game,spectator);
         return spectator;
     }
 
     removePersonFromGame(spectator: Spectator, game: Game): Spectator {
-        game.removeSpectator(spectator);
+        this.getGameEntityService().removeSpectator(game,spectator);
         return spectator;
     }
 }

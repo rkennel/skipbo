@@ -1,9 +1,8 @@
 import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
-import Game from "../../main/game/Game";
 import EntityService from "../../main/entity/EntityService";
 import {clearAllEntities} from "../entity/EntityUtils";
 import PlayerEntityService from "../../main/person/PlayerEntityService";
-import {Player} from "skipbo-common";
+import {Game, Player} from "skipbo-common";
 
 
 describe("Person Entity Service", () => {

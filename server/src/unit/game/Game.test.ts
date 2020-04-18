@@ -1,7 +1,6 @@
-import Game from "../../main/game/Game";
-import {clearAllEntities} from "../entity/EntityUtils";
-import {DuplicateError} from "../../main/common/Errors";
-import {Player} from "skipbo-common";
+import {Game, Player} from "skipbo-common";
+import GameEntityService from "../../main/game/GameEntityService";
+import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
 
 describe("Playing the game", () => {
 
@@ -47,154 +46,6 @@ describe("Playing the game", () => {
     });
   });
 
-  describe("adding and removing players from the game", () => {
-    describe("Active Players", () => {
-
-      it("When player is added to the game, the game id is automatically assigned",()=>{
-        const game = new Game();
-        const player = new Player("Alan");
-
-        game.addPlayer(player);
-
-        expect(player.gameid).toEqual(game.id);
-      });
-
-      it("Throws an error if more than 6 players are added to the game", () => {
-        const game = new Game();
-        game.addPlayer(new Player("Ross"));
-        game.addPlayer(new Player("Chandler"));
-        game.addPlayer(new Player("Joey"));
-        game.addPlayer(new Player("Monica"));
-        game.addPlayer(new Player("Phoebe"));
-        game.addPlayer(new Player("Rachel"));
-
-        expect(() => {
-          game.addPlayer(new Player("Gunther"));
-        }).toThrow(new Error("Maximum of 6 players is allowed"));
-      });
-
-      it("If player already in the game is added then throw duplicate player error", () => {
-        const game = new Game();
-        const player = new Player("MJ");
-
-        game.addPlayer(player);
-
-        expect(()=>{game.addPlayer(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
-      });
-
-      it("If player is in the spectator group then throw error when trying to add to player group", () => {
-        const game = new Game();
-        const player = new Player("MJ");
-
-        game.addSpectator(player);
-
-        expect(()=>{game.addPlayer(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
-      });
-
-      it("Removing player results in the player no longer being in the active player group", () => {
-        const game = new Game();
-        const player = new Player("MJ");
-
-        game.addPlayer(player);
-        game.removePlayer(player);
-
-        expect(game.players.length).toEqual(0);
-        expect(game.players.includes(player)).toBe(false);
-      });
-
-      it("Removing player results in the game id being set to undefined", () => {
-        const game = new Game();
-        const player = new Player("MJ");
-
-        game.addPlayer(player);
-        game.removePlayer(player);
-
-        expect(player.gameid).toBeUndefined();
-      });
-
-
-      it("Removing player not in the game has no effect", () => {
-        const game = new Game();
-        const player = new Player("MJ");
-        const player2 = new Player("Mailman");
-
-        game.addPlayer(player);
-        game.removePlayer(player2);
-
-        expect(game.players.length).toEqual(1);
-        expect(game.players.includes(player)).toBe(true);
-        expect(game.players.includes(player2)).toBe(false);
-      });
-    });
-
-    describe("Spectators", () => {
-
-      it("When spectator is added to the game, the game id is automatically assigned",()=>{
-        const game = new Game();
-        const player = new Player("Alan");
-
-        game.addSpectator(player);
-
-        expect(player.gameid).toEqual(game.id);
-      });
-
-      it("If player already a spectator then throw duplicate player exception", () => {
-        const game = new Game();
-        const player = new Player("Hastings");
-
-        game.addSpectator(player);
-
-        expect(()=>{game.addSpectator(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
-      });
-
-      it("If player is in the game then throw duplicate player error", () => {
-        const game = new Game();
-        const player = new Player("Hastings");
-
-        game.addPlayer(player);
-
-        expect(()=>{game.addSpectator(player)}).toThrow(new DuplicateError(`Player name must be unique to the game. a player named "${player.name}" already exists`));
-
-      });
-
-      it("Removing spectator results in the player no longer being in the spectator group", () => {
-        const game = new Game();
-        const player = new Player("Hastings");
-
-        game.addSpectator(player);
-        game.removeSpectator(player);
-
-        expect(game.spectators.length).toEqual(0);
-        expect(game.spectators.includes(player)).toBe(false);
-      });
-
-      it("Removing spectator results in the game id being set to undefined", () => {
-        const game = new Game();
-        const player = new Player("Hastings");
-
-        game.addPlayer(player);
-        game.removeSpectator(player);
-
-        expect(player.gameid).toBeUndefined();
-      });
-
-      it("Removing spectator not spectating has no effect", () => {
-        const game = new Game();
-        const player = new Player("Laimbeer");
-        const player2 = new Player("Hastings");
-
-        game.addPlayer(player);
-        game.addSpectator(player2);
-
-        game.removeSpectator(player);
-
-        expect(game.spectators.length).toEqual(1);
-        expect(game.spectators.includes(player)).toBe(false);
-        expect(game.spectators.includes(player2)).toBe(true);
-      });
-    });
-  });
-
   describe("starting the game", () => {
     it("Errors out if no players are specified", () => {
       expect(() => {
@@ -205,8 +56,8 @@ describe("Playing the game", () => {
 
     describe("Two Player Game", () => {
       const game: Game = new Game();
-      game.addPlayer(new Player("Ricky"));
-      game.addPlayer(new Player("Bobby"));
+      addPlayerToGame(game,new Player("Ricky"));
+      addPlayerToGame(game,new Player("Bobby"));
       game.start();
 
       it("Game has two players", () => {
@@ -243,3 +94,8 @@ describe("Playing the game", () => {
     });
   });
 });
+
+function addPlayerToGame(game: Game,player:Player) {
+  const gameEntityService:GameEntityService = <GameEntityService>EntityServiceFactory.getEntityService(Game.ENTITY_NAME);
+  gameEntityService.addPlayer(game,player);
+}

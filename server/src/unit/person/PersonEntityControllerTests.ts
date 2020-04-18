@@ -1,9 +1,8 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
 import {createAndReadTests, deleteTests, updateTests} from "../common/ControllerTests";
-import Game from "../../main/game/Game";
 import supertest, {Response} from "supertest";
 import {clearAllEntities, clearAllPlayersAndSpectators} from "../entity/EntityUtils";
-import {Card, Entity, Person, Player, Spectator} from "skipbo-common";
+import {Card, Entity, Game, Person, Player, Spectator} from "skipbo-common";
 
 export function personEntityTests(entityName: string) {
 

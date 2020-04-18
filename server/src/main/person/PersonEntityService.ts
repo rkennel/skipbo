@@ -1,7 +1,7 @@
 import EntityService from "../entity/EntityService";
-import Game from "../game/Game";
 import EntityServiceFactory from "../entity/EntityServiceFactory";
-import {generateUniqueId, Person, Player} from "skipbo-common";
+import {Game, generateUniqueId, Person, Player} from "skipbo-common";
+import GameEntityService from "../game/GameEntityService";
 
 export default abstract class PersonEntityService<T extends Person> extends EntityService<T> {
 
@@ -40,13 +40,14 @@ export default abstract class PersonEntityService<T extends Person> extends Enti
 
     deleteAll(){
         const games = this.getGameEntityService().getAll();
+        const gameEntityService:GameEntityService = this.getGameEntityService();
 
         for(let game of games){
             if(this.getEntityName()===Player.ENTITY_NAME){
-                game.removeAllPlayers();
+                gameEntityService.removeAllPlayers(game);
             }
             else{
-                game.removeAllSpectators();
+                gameEntityService.removeAllSpectators(game);
             }
         }
 
@@ -60,8 +61,8 @@ export default abstract class PersonEntityService<T extends Person> extends Enti
         }
     }
 
-    private  getGameEntityService():EntityService<Game> {
-        return <EntityService<Game>>EntityServiceFactory.getEntityService(Game.ENTITY_NAME);
+    protected getGameEntityService():GameEntityService {
+        return <GameEntityService>EntityServiceFactory.getEntityService(Game.ENTITY_NAME);
     }
 
     private getGameById(gameid:string):Game{
