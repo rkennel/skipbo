@@ -1,8 +1,7 @@
 import EntityService from "../entity/EntityService";
 import Game from "../game/Game";
 import EntityServiceFactory from "../entity/EntityServiceFactory";
-import {generateUniqueId} from "../entity/UniqueIdGenerator";
-import {Person, Player} from "skipbo-common";
+import {generateUniqueId, Person, Player} from "skipbo-common";
 
 export default abstract class PersonEntityService<T extends Person> extends EntityService<T> {
 
