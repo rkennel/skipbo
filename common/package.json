@@ -1,0 +1,38 @@
+{
+  "name": "skipbo-common",
+  "version": "1.0.0",
+  "description": "Common components used between client and server",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rkennel/skipbo/common"
+  },
+  "keywords": [
+    "skipbo"
+  ],
+  "author": "Ryan Kennel",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "my-awesome-greeter": "^1.0.2",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "prettier": "^1.19.1"
+  }
+}
