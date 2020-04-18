@@ -5,8 +5,7 @@ import supertest, {Response} from "supertest";
 import {clearAllEntities, clearAllPlayersAndSpectators} from "../entity/EntityUtils";
 import {Card} from "../../main/gameplay/Card";
 import Entity from "../../main/entity/Entity";
-import Person from "../../main/person/Person";
-import {Player, Spectator} from "skipbo-common";
+import {Person, Player, Spectator} from "skipbo-common";
 
 export function personEntityTests(entityName: string) {
 

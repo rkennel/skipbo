@@ -1,10 +1,7 @@
-import GameEntityController from "../game/GameEntityController";
-import EntityController from "../server/EntityController";
 import Entity from "./Entity";
 import EntityService from "./EntityService";
 import Game from "../game/Game";
 import PlayerEntityService from "../person/PlayerEntityService";
-import Player from "../person/Player";
 import SpectatorEntityService from "../person/SpectatorEntityService";
 
 export default class EntityServiceFactory {
