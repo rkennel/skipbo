@@ -1,6 +1,6 @@
-import Spectator from "./Specatator";
 import PersonEntityService from "./PersonEntityService";
 import Game from "../game/Game";
+import {Spectator} from "skipbo-common";
 
 export default class SpectatorEntityService extends PersonEntityService<Spectator> {
 

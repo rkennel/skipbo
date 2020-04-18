@@ -3,11 +3,11 @@ import {createAndReadTests, deleteTests, updateTests} from "../common/Controller
 import Game from "../../main/game/Game";
 import supertest, {Response} from "supertest";
 import {clearAllEntities, clearAllPlayersAndSpectators} from "../entity/EntityUtils";
-import Spectator from "../../main/person/Specatator";
 import Player from "../../main/person/Player";
 import {Card} from "../../main/gameplay/Card";
 import Entity from "../../main/entity/Entity";
 import Person from "../../main/person/Person";
+import {Spectator} from "skipbo-common";
 
 export function personEntityTests(entityName: string) {
 

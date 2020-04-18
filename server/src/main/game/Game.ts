@@ -5,8 +5,8 @@ import { isEqual } from "lodash";
 import Entity from "../entity/Entity";
 import {generateUniqueId} from "../entity/UniqueIdGenerator";
 import {DuplicateError} from "../common/Errors";
-import Spectator from "../person/Specatator";
 import Person from "../person/Person";
+import {Spectator} from "skipbo-common";
 
 export default class Game implements Entity {
 
