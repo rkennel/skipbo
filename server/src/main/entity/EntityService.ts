@@ -1,5 +1,5 @@
-import Entity from "./Entity";
 import {NotFoundError} from "../common/Errors";
+import {Entity} from "skipbo-common";
 
 export default class EntityService<T extends Entity> {
 

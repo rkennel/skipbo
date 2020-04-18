@@ -1,10 +1,10 @@
 import {Next, Request, Response, Server} from "restify";
 import EntityService from "../entity/EntityService";
 import EntityServiceFactory from "../entity/EntityServiceFactory";
-import Entity from "../entity/Entity";
 import status from "statuses";
 import {ErrorResponse} from "./ErrorResponse";
 import {DuplicateError, NotFoundError} from "../common/Errors";
+import {Entity} from "skipbo-common";
 
 /*
 Some Useful documentation

@@ -1,8 +1,8 @@
-import Entity from "./Entity";
 import EntityService from "./EntityService";
 import Game from "../game/Game";
 import PlayerEntityService from "../person/PlayerEntityService";
 import SpectatorEntityService from "../person/SpectatorEntityService";
+import {Entity} from "skipbo-common";
 
 export default class EntityServiceFactory {
 

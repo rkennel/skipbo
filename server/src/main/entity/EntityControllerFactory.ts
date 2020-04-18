@@ -1,8 +1,8 @@
 import GameEntityController from "../game/GameEntityController";
 import EntityController from "../server/EntityController";
-import Entity from "./Entity";
 import PlayerEntityController from "../person/PlayerEntityController";
 import SpectatorEntityController from "../person/SpectatorEntityController";
+import {Entity} from "skipbo-common";
 
 export default class EntityControllerFactory {
 

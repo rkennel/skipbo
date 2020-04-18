@@ -1,6 +1,6 @@
 import supertest, {Response} from "supertest";
 import SkipBoServer from "../../main/server/SkipBoServer";
-import Entity from "../../main/entity/Entity";
+import {Entity} from "skipbo-common";
 
 export function createAndReadTests(server: SkipBoServer, entityName: string, createEntityFunc: () => Entity) {
     it("Before any data has been added, get returns an empty list", async () => {
