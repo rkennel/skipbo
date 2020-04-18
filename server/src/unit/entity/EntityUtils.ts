@@ -1,6 +1,5 @@
 import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
-import Player from "../../main/person/Player";
-import {Spectator} from "skipbo-common";
+import {Player, Spectator} from "skipbo-common";
 
 export function clearAllEntities(){
 

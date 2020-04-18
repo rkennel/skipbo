@@ -3,7 +3,7 @@ import Game from "../../main/game/Game";
 import EntityService from "../../main/entity/EntityService";
 import {clearAllEntities} from "../entity/EntityUtils";
 import PlayerEntityService from "../../main/person/PlayerEntityService";
-import Player from "../../main/person/Player";
+import {Player} from "skipbo-common";
 
 
 describe("Person Entity Service", () => {

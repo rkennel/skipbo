@@ -1,7 +1,7 @@
 import Game from "../../main/game/Game";
-import Player from "../../main/person/Player";
 import {clearAllEntities} from "../entity/EntityUtils";
 import {DuplicateError} from "../../main/common/Errors";
+import {Player} from "skipbo-common";
 
 describe("Playing the game", () => {
 

@@ -1,5 +1,5 @@
 import EntityController from "../server/EntityController";
-import Player from "./Player";
+import {Player} from "skipbo-common";
 
 export default class PlayerEntityController extends EntityController<Player>{
 

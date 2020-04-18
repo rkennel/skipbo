@@ -1,8 +1,7 @@
-import Player from "./Player";
 import PersonEntityService from "./PersonEntityService";
 import Game from "../game/Game";
-import {generateUniqueId} from "../entity/UniqueIdGenerator";
-import { isEqual } from "lodash";
+import {isEqual} from "lodash";
+import {Player} from "skipbo-common";
 
 export default class PlayerEntityService extends PersonEntityService<Player> {
 
