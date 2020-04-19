@@ -23,24 +23,34 @@ function Login<T extends LoginProps>(props: T) {
 
   const [loginFormState, { text }] = useFormState<LoginFormFields>();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    const gameClient: GameClient = new GameClient();
-    const newGame: Game = gameClient.newGame();
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    function createNewGame(): Promise<Game> {
+      const gameClient: GameClient = new GameClient();
+      return gameClient.newGame();
+    }
+
+    function updateGame(game: Game): Promise<Game> {
+      loginFormState.setField("gameId", game.id);
+      props.setGame(game);
+      return Promise.resolve(game);
+    }
+
+    function addPlayerToGame(playerName: string, game: Game): Promise<Player> {
+      const playerClient: PlayerClient = new PlayerClient();
+      return playerClient.newPlayer(playerName, game.id);
+    }
+
+    function updatePlayer(player: Player): Promise<Player> {
+      props.setPlayer(player);
+      return Promise.resolve(player);
+    }
 
     const playerName = loginFormState.values.playerName;
-    const playerClient: PlayerClient = new PlayerClient();
-    const newPlayer: Player = playerClient.newPlayer(playerName, newGame.id);
 
-    loginFormState.setField("gameId", newGame.id);
-
-    props.setGame(newGame);
-    props.setPlayer(newPlayer);
-
-    event.preventDefault();
-  }
-
-  function debugValues() {
-    console.log(loginFormState.values);
+    await createNewGame()
+      .then(updateGame)
+      .then((game) => addPlayerToGame(playerName, game))
+      .then(updatePlayer);
   }
 
   return (
