@@ -67,16 +67,36 @@ function Login<T extends LoginProps>(props: T) {
     }
   }
 
+  function clearPlayerName() {
+    if (loginFormState.values.playerName === PLAYER_NAME_INSTRUCTIONS) {
+      loginFormState.setField("playerName", "");
+    }
+  }
+
+  function clearGameId() {
+    if (loginFormState.values.gameId === GAME_ID_INSTRUCTIONS) {
+      loginFormState.setField("gameId", "");
+    }
+  }
+
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
         <div className="logo">SB</div>
         <div className="inputPrompt">Enter a player name and game id</div>
         <div className="input">
-          <input {...text("playerName")} className="notInputted" />
+          <input
+            {...text("playerName")}
+            className="notInputted"
+            onClick={clearPlayerName}
+          />
         </div>
         <div className="input">
-          <input {...text("gameId")} className="notInputted" />
+          <input
+            {...text("gameId")}
+            className="notInputted"
+            onClick={clearGameId}
+          />
         </div>
         <div className="inputButton">
           <button id="loginSubmit" className="login" type="submit">

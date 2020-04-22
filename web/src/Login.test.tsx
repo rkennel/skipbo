@@ -51,7 +51,7 @@ jest.mock("./wsclient/PlayerClient", () => {
 });
 
 describe("Login", () => {
-  test("On Page Load", () => {
+  it("On Page Load", () => {
     //const login: RenderResult = render(<Login/>);
 
     let parent: RenderResult;
@@ -65,6 +65,79 @@ describe("Login", () => {
     expect(getInputValue(parent.baseElement, "gameId")).toEqual(
       GAME_ID_INSTRUCTIONS
     );
+  });
+
+  describe("On Input Click", () => {
+    let parent: RenderResult;
+    beforeEach(() => {
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+      });
+    });
+
+    it("clicking on player name will remove the instructions", () => {
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+        const playerNameInput = getInput(parent.baseElement, "playerName");
+        fireEvent.click(playerNameInput);
+      });
+
+      expect(getInputValue(parent.baseElement, "playerName")).toEqual("");
+    });
+
+    it("Valid Player in the text field, clicking on it will not change the value", () => {
+      const playerName = "MJ";
+      let playerNameInput;
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+        playerNameInput = getInput(parent.baseElement, "playerName");
+        setInputValue(parent.baseElement, "playerName", playerName);
+      });
+
+      expect(getInputValue(parent.baseElement, "playerName")).toEqual(
+        playerName
+      );
+
+      act(() => {
+        fireEvent.click(playerNameInput);
+      });
+
+      expect(getInputValue(parent.baseElement, "playerName")).toEqual(
+        playerName
+      );
+    });
+
+    it("clicking on gameId will remove the instructions", () => {
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+        const playerNameInput = getInput(parent.baseElement, "gameId");
+        fireEvent.click(playerNameInput);
+      });
+
+      expect(getInputValue(parent.baseElement, "gameId")).toEqual("");
+    });
+
+    it("Valid GameID in the text field, clicking on it will not change the value", () => {
+      const gameId = "GAMEID";
+      let gameIdInput;
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+        gameIdInput = getInput(parent.baseElement, "gameId");
+        setInputValue(parent.baseElement, "gameId", gameId);
+      });
+
+      expect(getInputValue(parent.baseElement, "gameId")).toEqual(
+          gameId
+      );
+
+      act(() => {
+        fireEvent.click(gameIdInput);
+      });
+
+      expect(getInputValue(parent.baseElement, "gameId")).toEqual(
+          gameId
+      );
+    });
   });
 
   describe("On submit", () => {
@@ -163,7 +236,9 @@ function setInputValue(
 }
 
 function submitForm(loginElement: HTMLElement) {
-  const button = loginElement.querySelector(`button[id="loginSubmit"]`) as HTMLElement;
+  const button = loginElement.querySelector(
+    `button[id="loginSubmit"]`
+  ) as HTMLElement;
   fireEvent.submit(button);
 }
 
