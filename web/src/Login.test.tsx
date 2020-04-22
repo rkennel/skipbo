@@ -1,6 +1,10 @@
 import React from "react";
 import { fireEvent, render, RenderResult, wait } from "@testing-library/react";
-import Login, { LoginProps } from "./Login";
+import Login, {
+  LoginProps,
+  PLAYER_NAME_INSTRUCTIONS,
+  GAME_ID_INSTRUCTIONS,
+} from "./Login";
 import GameClient from "./wsclient/GameClient";
 import PlayerClient from "./wsclient/GameClient";
 import { Game, Player } from "skipbo-common";
@@ -55,8 +59,12 @@ describe("Login", () => {
       parent = render(createComponent(new LoginPropsTest(new Map())));
     });
 
-    expect(getInputValue(parent.baseElement, "playerName")).toEqual("");
-    expect(getInputValue(parent.baseElement, "gameId")).toEqual("");
+    expect(getInputValue(parent.baseElement, "playerName")).toEqual(
+      PLAYER_NAME_INSTRUCTIONS
+    );
+    expect(getInputValue(parent.baseElement, "gameId")).toEqual(
+      GAME_ID_INSTRUCTIONS
+    );
   });
 
   describe("On submit", () => {
@@ -155,7 +163,7 @@ function setInputValue(
 }
 
 function submitForm(loginElement: HTMLElement) {
-  const button = getInput(loginElement, "loginSubmit");
+  const button = loginElement.querySelector(`button[id="loginSubmit"]`) as HTMLElement;
   fireEvent.submit(button);
 }
 
