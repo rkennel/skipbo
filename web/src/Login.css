@@ -1,0 +1,46 @@
+.Login{
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #024296;
+    padding: 2rem 2rem 2rem 2rem;
+    border: 1px solid #000000;
+    border-radius: 1.0rem;
+}
+
+div.logo,div.inputPrompt,div.input,div.inputButton {
+    text-align:center;
+    padding-bottom: 1rem;
+}
+
+div.logo{
+    font-size: 10rem;
+    font-weight: bold;
+    color:#ED1A23;
+}
+
+div.inputPrompt{
+    color:#ffffff;
+}
+
+input {
+    display: block;
+    box-sizing: border-box;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+button.login {
+    display: block;
+    box-sizing: border-box;
+    padding: 0.5rem 1.0rem 0.5rem 1.0rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 100%;
+    background-color: #ED1A23;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 0.5rem;
+}

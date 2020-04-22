@@ -1,3 +1,6 @@
+import "./common.css";
+import "./Login.css";
+
 import React, { FormEvent } from "react";
 import { useFormState } from "react-use-form-state";
 import { Game, Player } from "skipbo-common";
@@ -45,27 +48,39 @@ function Login<T extends LoginProps>(props: T) {
       return Promise.resolve(player);
     }
 
-    const playerName = loginFormState.values.playerName;
+    event.preventDefault();
 
-    await createNewGame()
-      .then(updateGame)
-      .then((game) => addPlayerToGame(playerName, game))
-      .then(updatePlayer);
+    const playerName = loginFormState.values.playerName;
+    try {
+      await createNewGame()
+        .then(updateGame)
+        .then((game) => addPlayerToGame(playerName, game))
+        .then(updatePlayer);
+    } catch (e) {
+      console.log(e.message);
+      console.log(e);
+    }
   }
 
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
-        <div className="label">Name:</div>
-        <div className="input">
-          <input {...text("playerName")} />
+        <div className="logo">
+          SB
         </div>
-        <div className="label">Game ID:</div>
-        <div className="input">
-          <input {...text("gameId")} />
+        <div className="inputPrompt">
+          Enter a player name and game id
         </div>
-        <div>
-          <input type="submit" name="loginSubmit" value="Submit" />
+        <div className="input">
+          <input {...text("playerName")} className="notInputted"/>
+        </div>
+        <div className="input">
+          <input {...text("gameId")} className="notInputted"/>
+        </div>
+        <div className="inputButton">
+          <button className="login" type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>

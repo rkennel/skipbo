@@ -1,14 +1,15 @@
 import GameClient from "./GameClient";
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { Game } from "skipbo-common";
+import { Game, Player } from "skipbo-common";
 import { WebServiceError } from "../errors/WebServiceError";
+import PlayerClient from "./PlayerClient";
 
-describe("Creating new game", () => {
-  let gameClient: GameClient;
+describe("Creating new player", () => {
+  let playerClient: PlayerClient;
 
   beforeAll(() => {
-    gameClient = new GameClient();
-    gameClient.client = jest.mock("axios");
+    playerClient = new PlayerClient();
+    playerClient.client = jest.mock("axios");
   });
 
   beforeEach(() => {
@@ -16,27 +17,38 @@ describe("Creating new game", () => {
   });
 
   it("Normal circumstances, successful request", async () => {
-    gameClient.client.post = function (
+    const player: Player = JSON.parse(createNewPlayerJsonResponse) as Player;
+
+    playerClient.client.post = function (
       url: string,
       config?: AxiosRequestConfig
     ): Promise<AxiosResponse<Game>> {
-      const game: Game = JSON.parse(createNewGameJsonResponse) as Game;
-      const axiosResponse: AxiosResponse = createAxiosResponse<Game>(
-        game,
+      const axiosResponse: AxiosResponse = createAxiosResponse<Player>(
+        player,
         201,
         "Created"
       );
       return Promise.resolve(axiosResponse);
     };
 
-    const actual: Game = await gameClient.newGame();
+    const clientPostSpy = jest.spyOn(playerClient.client, "post");
 
-    expect(actual.id).toEqual("jestgame");
+    const actual: Player = await playerClient.newPlayer(
+      player.name,
+      player.gameid
+    );
+
+    expect(actual.id).toEqual("jestplay");
+    expect(clientPostSpy).toBeCalledWith("http://localhost:8080/player", {
+      name: player.name,
+      gameid: player.gameid,
+    });
   });
 
   it("Catches any axios error and wraps it up", async () => {
     const axiosError: AxiosError = createAxiosError(400, "Bad Request");
-    gameClient.client.post = function (
+
+    playerClient.client.post = function (
       url: string,
       config?: AxiosRequestConfig
     ): Promise<AxiosResponse<Game>> {
@@ -44,7 +56,7 @@ describe("Creating new game", () => {
     };
 
     try {
-      const actual: Game = await gameClient.newGame();
+      await playerClient.newPlayer();
     } catch (err) {
       const webServiceError: WebServiceError = err as WebServiceError;
       expect(webServiceError.status).toEqual(400);
@@ -87,15 +99,8 @@ function createAxiosError(status: number, statusText: string): AxiosError {
   };
 }
 
-const createNewGameJsonResponse = `{
-    "players": [],
-    "spectators": [],
-    "buildingPiles": [
-        [],
-        [],
-        [],
-        []
-    ],
-    "entityName": "game",
-    "id": "jestgame"
+const createNewPlayerJsonResponse = `{
+    "name": "sammy",
+    "gameid": "jestgame",
+    "id": "jestplay"
 }`;

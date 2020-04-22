@@ -98,3 +98,19 @@ export async function createEntity(server: SkipBoServer, entityName: string, cre
         return supertest(server.server).put(`/${entityName}`);
     }
 }
+
+export function optionsTests(server: SkipBoServer, entityName: string){
+
+    let optionsResponse: Response;
+
+    it(`I can query what options are allowed`, async () => {
+        const postResponse: Response = await createEntity(server,entityName,createEntityFunc);
+        const entityCreated = postResponse.body;
+
+        const deleteResponse: Response = await supertest(server.server).delete(`/${entityName}/${entityCreated.id}`);
+        expect(deleteResponse.status).toEqual(204);
+
+        const getResponse: Response = await supertest(server.server).get(`/${entityName}/${entityCreated.id}`);
+        expect(getResponse.status).toEqual(404);
+    });
+}

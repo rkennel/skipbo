@@ -10,8 +10,6 @@ function App() {
   return (
     <div className="App">
       <Login setGame={setGame} setPlayer={setPlayer}/>
-      {JSON.stringify(game)}<br/>
-      {JSON.stringify(player)}
     </div>
   );
 }
