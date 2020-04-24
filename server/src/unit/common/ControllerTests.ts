@@ -151,4 +151,3 @@ export async function createEntity(
     return supertest(server.server).put(`/${entityName}`);
   }
 }
-

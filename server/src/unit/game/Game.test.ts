@@ -1,9 +1,8 @@
-import {Game, Player} from "skipbo-common";
+import { Game, Player } from "skipbo-common";
 import GameEntityService from "../../main/game/GameEntityService";
 import EntityServiceFactory from "../../main/entity/EntityServiceFactory";
 
 describe("Playing the game", () => {
-
   describe("Game Identifier", () => {
     it("Generates a unique identifier", () => {
       const game = new Game();
@@ -56,8 +55,8 @@ describe("Playing the game", () => {
 
     describe("Two Player Game", () => {
       const game: Game = new Game();
-      addPlayerToGame(game,new Player("Ricky"));
-      addPlayerToGame(game,new Player("Bobby"));
+      addPlayerToGame(game, new Player("Ricky"));
+      addPlayerToGame(game, new Player("Bobby"));
       game.start();
 
       it("Game has two players", () => {
@@ -95,7 +94,9 @@ describe("Playing the game", () => {
   });
 });
 
-function addPlayerToGame(game: Game,player:Player) {
-  const gameEntityService:GameEntityService = <GameEntityService>EntityServiceFactory.getEntityService(Game.ENTITY_NAME);
-  gameEntityService.addPlayer(game,player);
+function addPlayerToGame(game: Game, player: Player) {
+  const gameEntityService: GameEntityService = <GameEntityService>(
+    EntityServiceFactory.getEntityService(Game.ENTITY_NAME)
+  );
+  gameEntityService.addPlayer(game, player);
 }

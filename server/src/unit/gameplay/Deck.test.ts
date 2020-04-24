@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import {Card, Deck} from "skipbo-common";
+import { Card, Deck } from "skipbo-common";
 
 describe("Card Deck Functionality", () => {
   describe("Fresh deck", () => {
