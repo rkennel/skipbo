@@ -1,5 +1,0 @@
-/System/Volumes/Data/private/var/folders/p1/5pl999xd37904kc8gl8rpynr0000gn/T/jest_dx/ts-jest
-/System/Volumes/Data/Volumes/Seagate Backup Plus Drive/backup/ford/rkennel/Workspaces/pdo-metrics/rally/iteration_revue/node_modules/.bin/ts-jest
-/System/Volumes/Data/Volumes/Seagate Backup Plus Drive/backup/ford/rkennel/Workspaces/pdo-metrics/rally/iteration_revue/node_modules/ts-jest
-/System/Volumes/Data/Volumes/Seagate Backup Plus Drive/backup/ford/rkennel/Workspaces/agile-metrics/agile-metrics-ui/node_modules/ts-jest
-/System/Volumes/Data/Volumes/Seagate Backup Plus Drive/backup/ford/rkennel/Workspaces/agile-metrics/agile-metrics-ui/node_modules/.bin/ts-jest
