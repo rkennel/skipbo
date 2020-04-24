@@ -62,9 +62,6 @@ export default class GameEntityService extends EntityService<Game> {
   }
 
   removeAllPlayers(game: Game) {
-    for (let player of game.players) {
-      player.id = undefined;
-    }
     game.players = [];
   }
 
@@ -77,10 +74,6 @@ export default class GameEntityService extends EntityService<Game> {
   }
 
   removeAllSpectators(game: Game) {
-    for (let spectator of game.spectators) {
-      spectator.id = undefined;
-    }
-
     game.spectators = [];
   }
 }

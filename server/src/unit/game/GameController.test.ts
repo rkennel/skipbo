@@ -1,39 +1,49 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
-import {createAndReadTests, createEntity, deleteTests} from "../common/ControllerTests";
-import {clearAllEntities} from "../entity/EntityUtils";
-import supertest, {Response} from "supertest";
-import {Game, Player} from "skipbo-common";
+import {
+  createAndReadTests,
+  createEntity,
+  deleteTests
+} from "../common/ControllerTests";
+import { clearAllEntities } from "../entity/EntityUtils";
+import supertest, { Response } from "supertest";
+import { Game, Player } from "skipbo-common";
 
 describe("Game Rest Services", () => {
+  const entityName = Game.ENTITY_NAME;
+  const server: SkipBoServer = new SkipBoServer();
+  beforeAll(() => {
+    clearAllEntities();
+    server.start();
+  });
 
-    const entityName = Game.ENTITY_NAME;
-    const server: SkipBoServer = new SkipBoServer();
-    beforeAll(() => {
-        clearAllEntities();
-        server.start();
-    });
+  afterAll(() => {
+    server.stop();
+    clearAllEntities();
+  });
 
-    afterAll(() => {
-        server.stop();
-        clearAllEntities();
-    });
+  createAndReadTests(server, entityName, undefined);
 
-    createAndReadTests(server,entityName, undefined);
+  deleteTests(server, entityName, undefined);
 
-    deleteTests(server,entityName, undefined);
+  it("Update method is not allowed on all games", async () => {
+    const updateResponse: Response = await supertest(server.server).put(
+      `/${entityName}`
+    );
+    expect(updateResponse.status).toEqual(405);
+  });
 
-    it("Update method is not allowed on all games",async ()=>{
-        const updateResponse: Response = await supertest(server.server).put(`/${entityName}`);
-        expect(updateResponse.status).toEqual(405);
-    });
+  it("Update method is not allowed on a single game", async () => {
+    const postResponse: Response = await createEntity(
+      server,
+      Game.ENTITY_NAME,
+      () => new Game()
+    );
+    const game: Game = <Game>postResponse.body;
+    game.players = [new Player("Cheater")];
 
-    it("Update method is not allowed on a single game",async ()=>{
-        const postResponse: Response = await createEntity(server,Game.ENTITY_NAME,()=>new Game());
-        const game:Game = <Game>postResponse.body;
-        game.players = [new Player("Cheater")];
-
-        const updateResponse: Response = await supertest(server.server).put(`/${entityName}/${game.id}`);
-        expect(updateResponse.status).toEqual(405);
-    });
-
+    const updateResponse: Response = await supertest(server.server).put(
+      `/${entityName}/${game.id}`
+    );
+    expect(updateResponse.status).toEqual(405);
+  });
 });

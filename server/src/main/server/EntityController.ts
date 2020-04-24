@@ -97,9 +97,9 @@ export default abstract class EntityController<T extends Entity> {
   }
 
   createNew(req: Request, res: Response, next: Next) {
-    let entity: T = undefined;
+    let entity = undefined;
     if (req.body) {
-      entity = <T>req.body;
+      entity = <T>req.body!;
     }
 
     try {

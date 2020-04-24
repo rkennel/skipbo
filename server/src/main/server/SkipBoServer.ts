@@ -2,17 +2,66 @@ import * as restify from "restify";
 import { Server, plugins } from "restify";
 import EntityControllerFactory from "../entity/EntityControllerFactory";
 import corsMiddleware from "restify-cors-middleware";
+import * as ws from "ws";
+import WebSocket, { Data } from "ws";
 
-const PORT = process.env.PORT || 8080;
+export const PORT = process.env.PORT || 8080;
 
 export default class SkipBoServer {
   server: restify.Server;
 
-  constructor() {}
+  constructor() {
+    this.server = this.constructServer();
+  }
+
+  private constructServer(): restify.Server {
+    const server = restify.createServer();
+
+    const cors = corsMiddleware({
+      preflightMaxAge: 5, //Optional
+      origins: ["http://localhost:3000"],
+      allowHeaders: ["Authorization"],
+      exposeHeaders: ["Authorization"]
+    });
+
+    server.pre(cors.preflight);
+    server.use(cors.actual);
+    server.use(plugins.acceptParser(server.acceptable));
+    server.use(plugins.bodyParser({ mapParams: true }));
+
+    this.registerRoutes(server);
+
+    return server;
+  }
 
   start() {
-    if (!this.server || !this.isListening()) {
-      this.initializeServer();
+    if (!this.isListening()) {
+      const server = this.server;
+
+      const logStarting = function() {
+        console.log(`Restify Server listening on port: ${PORT}`);
+        initializeWebSocket(server);
+
+        function initializeWebSocket(server: Server): void {
+          const wss = new ws.Server(server);
+
+          wss.on("connection", function connection(ws: WebSocket) {
+            ws.on("message", function incoming(message) {
+              console.log("Message");
+              console.log(JSON.stringify(message));
+              wss.clients.forEach(function each(client: WebSocket) {
+                client.send(message);
+              });
+            });
+
+            ws.send("Welcome!");
+
+            console.log("Web Socket Listening");
+          });
+        }
+      };
+
+      this.server.listen(PORT, logStarting);
     }
   }
 
@@ -20,49 +69,17 @@ export default class SkipBoServer {
     this.server.close();
   }
 
-  private initializeServer() {
-    const logStarting = function() {
-      console.log(`Restify Server listening on port: ${PORT}`);
-    };
-
-    if (!this.server) {
-      this.server = restify.createServer();
-
-      const cors = corsMiddleware({
-        preflightMaxAge: 5, //Optional
-        origins: ["http://localhost:3000"],
-        allowHeaders: ["Authorization"],
-        exposeHeaders: ["Authorization"]
-      });
-
-      this.server.pre(cors.preflight);
-      this.server.use(cors.actual);
-
-      // this.server.use(function crossOrigin(req, res, next) {
-      //   res.header("Access-Control-Allow-Origin", "*");
-      //   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-      //   return next();
-      // });
-      this.server.use(plugins.acceptParser(this.server.acceptable));
-      this.server.use(plugins.bodyParser({ mapParams: true }));
-
-      this.registerRoutes(this.server);
-    }
-    if (!this.isListening()) {
-      this.server.listen(PORT, logStarting);
-    }
-  }
-
   isListening(): boolean {
-    return this.server.address() != null;
+    const url = this.server.url;
+    return url.substring(url.lastIndexOf(":") + 1) != "0000";
   }
 
   private registerRoutes(server: Server) {
     server.pre(function(request, response, next) {
       function formatRequestForLogMessage(
         today: Date,
-        method: string,
-        url: string
+        method: string = "unknown_method",
+        url: string = "uknown_url"
       ) {
         return `${today.toLocaleDateString(
           "en-US"

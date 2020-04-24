@@ -6,7 +6,7 @@ export default abstract class Person implements Entity{
 
   id: string;
   name: string;
-  gameid: string;
+  gameid?: string;
 
   entityName = "#####INSERT ENTITY NAME HERE#####";
 

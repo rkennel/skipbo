@@ -1,13 +1,6 @@
 import SkipBoServer from "../../main/server/SkipBoServer";
-import supertest, { Response } from "supertest";
 
 const server: SkipBoServer = new SkipBoServer();
-
-describe("Instantiating Server", () => {
-  test("Server should be undefined", () => {
-    expect(server.server).toBeUndefined();
-  });
-});
 
 describe("Starting Server functions", () => {
   beforeEach(() => {
@@ -28,12 +21,6 @@ describe("Starting Server functions", () => {
     server.start();
 
     expect(spy).not.toHaveBeenCalled();
-  });
-
-  test("health page returns response", async () => {
-    const response: Response = await supertest(server.server).get("/health");
-    expect(response.status).toEqual(200);
-    expect(response.body).toEqual("SkipBo Server is up and running");
   });
 });
 
@@ -78,3 +65,71 @@ describe("Stopping Server functions", () => {
     expect(server.isListening()).toBe(true);
   });
 });
+
+// describe("Web Socket Server", () => {
+//   beforeEach(() => {
+//     server.start();
+//     console.log(server.isListening());
+//   });
+//
+//   afterEach(() => {
+//     server.stop();
+//   });
+//
+//   test("I can send a message to the web socket server", async () => {
+//     console.log(server.isListening());
+//     //console.log(server.wss.lis)
+//     const wsurl = "ws://localhost:" + PORT;
+//     const skipBoEvent = new SkipBoEvent(new ChatEventDetails("Hello World"));
+//
+//     //expect.assertions(1);
+//
+//     // const client = new WebSocket(wsurl)
+//     //   .on("message", msg => {
+//     //     console.log(msg);
+//     //     expect(1 + 1).toEqual(3);
+//     //     client.close();
+//     //   })
+//     //   .on("close", () => {});
+//     //
+//     // client.send(skipBoEvent);
+//
+//     function onOpen(evt: WebSocket.OpenEvent) {
+//       console.log(`Opened WebSocket`);
+//     }
+//
+//     function onClose(evt: WebSocket.CloseEvent) {
+//       console.log("Closed WebSocket");
+//     }
+//
+//     function onMessage(evt: WebSocket.MessageEvent) {
+//       console.log("Received Message");
+//       console.log(evt);
+//     }
+//
+//     function onError(evt: WebSocket.ErrorEvent) {
+//       console.log("Error");
+//       console.log(evt.message);
+//       console.log(evt.error);
+//     }
+//
+//     const websocket = new WebSocket(wsurl);
+//     websocket.onopen = function(evt) {
+//       onOpen(evt);
+//     };
+//     websocket.onclose = function(evt) {
+//       onClose(evt);
+//     };
+//     websocket.onmessage = function(evt) {
+//       onMessage(evt);
+//     };
+//     websocket.onerror = function(evt) {
+//       onError(evt);
+//     };
+//
+//     const sleep = require("atomic-sleep");
+//     sleep(10000);
+//
+//     websocket.send(skipBoEvent);
+//   });
+// });

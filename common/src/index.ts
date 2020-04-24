@@ -6,4 +6,6 @@ export {default as Person} from "./entities/Person"
 export {default as Player} from "./entities/Player"
 export {default as Spectator} from "./entities/Specatator"
 export {generateUniqueId} from "./entities/UniqueIdGenerator"
+export {default as SkipBoEvent} from "./entities/SkipBoEvent"
+export {EventDetails, ChatEventDetails} from "./entities/SkipBoEvent"
 

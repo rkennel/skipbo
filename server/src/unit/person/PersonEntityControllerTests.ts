@@ -2,7 +2,6 @@ import SkipBoServer from "../../main/server/SkipBoServer";
 import {
   createAndReadTests,
   deleteTests,
-  optionsTests,
   updateTests
 } from "../common/ControllerTests";
 import supertest, { Response } from "supertest";
@@ -118,10 +117,6 @@ export function personEntityTests(entityName: string) {
   describe("Delete Tests", () => {
     deleteTests(server, entityName, createPerson);
   });
-
-  describe("Option Tests", () => {
-    optionsTests(server, entityName);
-  });
 }
 
 async function createNewGame(server: SkipBoServer): Promise<Game> {
@@ -152,10 +147,10 @@ async function cheaterTests(
   entityName: string,
   createPerson: () => Person,
   createAction: (person: Person) => Promise<Response>,
-  updateAction: (person: Person) => Promise<Response>
+  updateAction?: (person: Person) => Promise<Response>
 ) {
   const performingUpdate = updateAction ? true : false;
-  const restAction = performingUpdate ? updateAction : createAction;
+  const restAction = (performingUpdate ? updateAction : createAction)!;
   let person: Person;
 
   beforeEach(async () => {
