@@ -1,16 +1,21 @@
 import * as restify from "restify";
-import { Server, plugins } from "restify";
+import { plugins, Server } from "restify";
 import EntityControllerFactory from "../entity/EntityControllerFactory";
 import corsMiddleware from "restify-cors-middleware";
-import * as ws from "ws";
-import WebSocket, { Data } from "ws";
+import SkipBoWebSocketServer from "./SkipBoWebSocketServer";
 
 export const PORT = process.env.PORT || 8080;
 
 export default class SkipBoServer {
+  port = 0;
   server: restify.Server;
+  wsserver: SkipBoWebSocketServer;
 
-  constructor() {
+  constructor(port?: number) {
+    if (port) {
+      this.port = port;
+    }
+
     this.server = this.constructServer();
   }
 
@@ -34,39 +39,30 @@ export default class SkipBoServer {
     return server;
   }
 
-  start() {
+  start(cb: () => void = () => {}) {
     if (!this.isListening()) {
       const server = this.server;
+      const skipBoServer = this;
 
-      const logStarting = function() {
-        console.log(`Restify Server listening on port: ${PORT}`);
-        initializeWebSocket(server);
+      const port = this.port;
 
-        function initializeWebSocket(server: Server): void {
-          const wss = new ws.Server(server);
-
-          wss.on("connection", function connection(ws: WebSocket) {
-            ws.on("message", function incoming(message) {
-              console.log("Message");
-              console.log(JSON.stringify(message));
-              wss.clients.forEach(function each(client: WebSocket) {
-                client.send(message);
-              });
-            });
-
-            ws.send("Welcome!");
-
-            console.log("Web Socket Listening");
-          });
-        }
+      const startingServerCallback = function() {
+        console.log(`Restify Server listening on port: ${server.address().port}`);
+        skipBoServer.wsserver = new SkipBoWebSocketServer(server);
+        cb();
       };
 
-      this.server.listen(PORT, logStarting);
+      this.server.listen(this.port, startingServerCallback);
     }
   }
 
-  stop() {
-    this.server.close();
+  stop(cb: () => void = () => {}) {
+    const wsserver = this.wsserver;
+
+    this.server.close(() => {
+      wsserver.close();
+      cb();
+    });
   }
 
   isListening(): boolean {

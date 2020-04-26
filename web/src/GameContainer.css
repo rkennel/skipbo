@@ -1,0 +1,20 @@
+.GameContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #000000;
+    width: 1200px;
+    height: 800px;
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+#game{
+    background-color: green;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: center;
+}

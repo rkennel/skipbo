@@ -1,8 +1,8 @@
-import EventOutputStreamPublisher, {
-  EventOutputStreamSubscriber
+import SkipBoEventPublisher, {
+  SkipBoEventSubscriber
 } from "../../main/event/EventOutputStream";
 
-import { SkipBoEvent } from "skipbo-common";
+import {EventType, SkipBoEvent} from "skipbo-common";
 import { ChatEventDetails } from "skipbo-common/build/entities/SkipBoEvent";
 
 describe("EventOutputStream", () => {
@@ -10,8 +10,8 @@ describe("EventOutputStream", () => {
   const playerid = "1234";
 
   describe("Subscribing to an event", () => {
-    let publisher: EventOutputStreamPublisher,
-      subscriber: EventOutputStreamSubscriber;
+    let publisher: SkipBoEventPublisher,
+      subscriber: SkipBoEventSubscriber;
     const msg = {
       event: {}
     };
@@ -19,13 +19,13 @@ describe("EventOutputStream", () => {
     beforeEach(() => {
       msg.event = {};
 
-      publisher = EventOutputStreamPublisher.getInstance();
+      publisher = SkipBoEventPublisher.getInstance();
 
-      const fn = function(event: SkipBoEvent): void {
+      const fn = function(event: SkipBoEvent<EventType.CHAT>): void {
         msg.event = event;
       };
 
-      subscriber = new EventOutputStreamSubscriber(gameid, playerid, fn);
+      subscriber = new SkipBoEventSubscriber(gameid, playerid, fn);
 
       publisher.subscribe(subscriber);
     });
@@ -40,7 +40,7 @@ describe("EventOutputStream", () => {
     });
 
     it("When I subscribe to an event, I receive messages", () => {
-      const event: SkipBoEvent = new SkipBoEvent(
+      const event = new SkipBoEvent(
         new ChatEventDetails("This is an event"),
         gameid,
         playerid
@@ -52,7 +52,7 @@ describe("EventOutputStream", () => {
     });
 
     it("I do not receive messages for other players", () => {
-      const event: SkipBoEvent = new SkipBoEvent(
+      const event = new SkipBoEvent(
         new ChatEventDetails("This is an event"),
         gameid,
         "OTHER_PLAYER"
@@ -64,7 +64,7 @@ describe("EventOutputStream", () => {
     });
 
     it("When no player is specified, I receive the event", () => {
-      const event: SkipBoEvent = new SkipBoEvent(
+      const event = new SkipBoEvent(
         new ChatEventDetails("This is an event"),
         gameid
       );
@@ -75,7 +75,7 @@ describe("EventOutputStream", () => {
     });
 
     it("I do not receive messages for other games", () => {
-      const event: SkipBoEvent = new SkipBoEvent(
+      const event = new SkipBoEvent(
         new ChatEventDetails("This is an event"),
         "OTHER GAME"
       );
@@ -86,7 +86,7 @@ describe("EventOutputStream", () => {
     });
 
     it("I receive global messages", () => {
-      const event: SkipBoEvent = new SkipBoEvent(
+      const event = new SkipBoEvent(
         new ChatEventDetails("This is an event")
       );
 
@@ -97,8 +97,8 @@ describe("EventOutputStream", () => {
   });
 
   describe("Unsubscring from an event", () => {
-    let publisher: EventOutputStreamPublisher,
-      subscriber: EventOutputStreamSubscriber;
+    let publisher: SkipBoEventPublisher,
+      subscriber: SkipBoEventSubscriber;
 
     const msg = {
       event: {}
@@ -107,13 +107,13 @@ describe("EventOutputStream", () => {
     beforeEach(() => {
       msg.event = {};
 
-      publisher = EventOutputStreamPublisher.getInstance();
+      publisher = SkipBoEventPublisher.getInstance();
 
-      const fn = function(event: SkipBoEvent): void {
+      const fn = function(event: SkipBoEvent<EventType.CHAT>): void {
         msg.event = event;
       };
 
-      subscriber = new EventOutputStreamSubscriber(gameid, playerid, fn);
+      subscriber = new SkipBoEventSubscriber(gameid, playerid, fn);
 
       publisher.subscribe(subscriber);
 
@@ -126,7 +126,7 @@ describe("EventOutputStream", () => {
     });
 
     it("When I subscribe to an event, I receive messages", () => {
-      const event: SkipBoEvent = new SkipBoEvent(
+      const event = new SkipBoEvent(
         new ChatEventDetails("This is an event"),
         gameid,
         playerid

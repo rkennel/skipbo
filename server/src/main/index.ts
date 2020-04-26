@@ -1,4 +1,2 @@
-import SkipBoServer from "./server/SkipBoServer";
-
-const server = new SkipBoServer();
-server.start();
+export { default as SkipBoServer } from "./server/SkipBoServer";
+export { default as SkipBoWebSocketServer } from "./server/SkipBoWebSocketServer";

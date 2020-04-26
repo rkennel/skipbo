@@ -1,14 +1,14 @@
 import moment, {Moment} from "moment";
 
 
-export default class SkipBoEvent {
-    ts:Moment;
-    eventDetails:EventDetails;
+export default class SkipBoEvent<E extends EventType> {
+    ts:string;
+    eventDetails:EventDetails<E>;
     gameid:string;
     playerid:string;
 
-    constructor(eventDetails:EventDetails,gameid?:string,playerid?:string) {
-        this.ts = moment();
+    constructor(eventDetails:EventDetails<E>,gameid?:string,playerid?:string) {
+        this.ts = moment().toDate().toISOString();
         this.eventDetails = eventDetails;
         if(gameid){
             this.gameid=gameid;
@@ -21,14 +21,17 @@ export default class SkipBoEvent {
 }
 
 export enum EventType {
-    CHAT
+    CONNECT="CONNECT",
+    SUBSCRIBE="SUBSCRIBE",
+    UNSUBSCRIBE="UNSUBSCRIBE",
+    CHAT="CHAT"
 }
 
-export interface EventDetails {
+export interface EventDetails<E extends EventType> {
     eventType:EventType;
 }
 
-export class ChatEventDetails implements EventDetails{
+export class ChatEventDetails implements EventDetails<EventType.CHAT>{
     eventType: EventType = EventType.CHAT;
     text:string;
 
@@ -36,4 +39,8 @@ export class ChatEventDetails implements EventDetails{
         this.text=text;
     }
 
+}
+
+export class ConnectEventDetails implements EventDetails<EventType.CONNECT>{
+    eventType=EventType.CONNECT
 }

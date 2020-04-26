@@ -1,0 +1,26 @@
+.Chat{
+    background-color: #ffffff;
+
+    display: grid;
+    grid-template-rows: 2.5rem auto 3rem;
+}
+
+.title{
+    color:#ED1A23;
+    font-size: 1.5rem;
+    font-weight: 900;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    text-align: center;
+}
+
+.stream{
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.chatInput{
+    box-sizing: border-box;
+    border-top: 1px solid #024296;
+    border-bottom: none;
+    border-left: none;
+    border-right:none;
+}

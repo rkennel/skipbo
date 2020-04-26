@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import "./common.css";
 import "./App.css";
 import Login from "./Login";
+import GameContainer from "./GameContainer";
 
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
@@ -13,7 +15,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/game">
-            <div>Let's Play a Game!</div>
+            <GameContainer/>
           </Route>
           <Route path="/">
             <Login setGame={setGame} setPlayer={setPlayer} />
