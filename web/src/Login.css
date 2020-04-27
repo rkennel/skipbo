@@ -3,9 +3,9 @@
     top:  50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background-color: #024296;
+    background-color: rgb(2,56,150);
     padding: 2rem 2rem 2rem 2rem;
-    border: 1px solid #000000;
+    border: 1px solid rgb(0,0,0);
     border-radius: 1.0rem;
 }
 
@@ -17,11 +17,11 @@ div.logo,div.inputPrompt,div.input,div.inputButton {
 div.logo{
     font-size: 10rem;
     font-weight: bold;
-    color:#ED1A23;
+    color: rgb(237,26,35);
 }
 
 div.inputPrompt{
-    color:#ffffff;
+    color:rgb(255,255,255);
 }
 
 input {
@@ -39,8 +39,8 @@ button.login {
     font-size: 1.5rem;
     font-weight: bold;
     width: 100%;
-    background-color: #ED1A23;
-    color: #ffffff;
-    border: 2px solid #ffffff;
+    background-color: rgb(237,26,35);
+    color: rgb(255,255,255);
+    border: 2px solid rgb(255,255,255);
     border-radius: 0.5rem;
 }

@@ -1,15 +1,20 @@
 body {
     font-family: Arial;
     font-size: 16pt;
-    color: #000000;
-    background-color: #36393E;
+    color: rgb(0,0,0);
+    background-color: rgb(54,57,62);
 }
 
 input {
     font-family: Arial;
     font-size: 16pt;
+    color: rgb(0,0,0);
 }
 
 input.notInputted {
-    color:#495057;
+    color:rgba(237,26,35,0.5);
+}
+
+input.inputted {
+    color:rgba(0,0,0,1.0);
 }

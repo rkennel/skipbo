@@ -1,7 +1,7 @@
 import "./common.css";
 import "./Login.css";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, ReactInstance, useState } from "react";
 import { useFormState } from "react-use-form-state";
 import { Game, Player } from "skipbo-common";
 import GameClient from "./wsclient/GameClient";
@@ -31,6 +31,11 @@ function Login<T extends LoginProps>(props: T) {
     gameId: GAME_ID_INSTRUCTIONS,
   });
 
+  const [playerNameStyleClass, setPlayerNameStyleClass] = useState(
+    "notInputted"
+  );
+  const [gameIdStyleClass, setGameIdStyleClass] = useState("notInputted");
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     function createNewGame(): Promise<Game> {
       const gameClient: GameClient = new GameClient();
@@ -40,6 +45,7 @@ function Login<T extends LoginProps>(props: T) {
     function updateGame(game: Game): Promise<Game> {
       loginFormState.setField("gameId", game.id);
       props.setGame(game);
+      setGameIdStyleClass("inputted");
       return Promise.resolve(game);
     }
 
@@ -70,12 +76,14 @@ function Login<T extends LoginProps>(props: T) {
   function clearPlayerName() {
     if (loginFormState.values.playerName === PLAYER_NAME_INSTRUCTIONS) {
       loginFormState.setField("playerName", "");
+      setPlayerNameStyleClass("inputted");
     }
   }
 
   function clearGameId() {
     if (loginFormState.values.gameId === GAME_ID_INSTRUCTIONS) {
       loginFormState.setField("gameId", "");
+      setGameIdStyleClass("inputted");
     }
   }
 
@@ -87,14 +95,14 @@ function Login<T extends LoginProps>(props: T) {
         <div className="input">
           <input
             {...text("playerName")}
-            className="notInputted"
+            className={playerNameStyleClass}
             onClick={clearPlayerName}
           />
         </div>
         <div className="input">
           <input
             {...text("gameId")}
-            className="notInputted"
+            className={gameIdStyleClass}
             onClick={clearGameId}
           />
         </div>

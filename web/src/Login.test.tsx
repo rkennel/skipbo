@@ -85,6 +85,18 @@ describe("Login", () => {
       expect(getInputValue(parent.baseElement, "playerName")).toEqual("");
     });
 
+    it("clicking on player name will change className to inputted", () => {
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+        const playerNameInput = getInput(parent.baseElement, "playerName");
+        fireEvent.click(playerNameInput);
+      });
+
+      expect(getInput(parent.baseElement, "playerName").className).toEqual(
+        "inputted"
+      );
+    });
+
     it("Valid Player in the text field, clicking on it will not change the value", () => {
       const playerName = "MJ";
       let playerNameInput;
@@ -117,6 +129,18 @@ describe("Login", () => {
       expect(getInputValue(parent.baseElement, "gameId")).toEqual("");
     });
 
+    it("clicking on gameId will change className to inputted", () => {
+      act(() => {
+        parent = render(createComponent(new LoginPropsTest(new Map())));
+        const playerNameInput = getInput(parent.baseElement, "gameId");
+        fireEvent.click(playerNameInput);
+      });
+
+      expect(getInput(parent.baseElement, "gameId").className).toEqual(
+        "inputted"
+      );
+    });
+
     it("Valid GameID in the text field, clicking on it will not change the value", () => {
       const gameId = "GAMEID";
       let gameIdInput;
@@ -126,17 +150,13 @@ describe("Login", () => {
         setInputValue(parent.baseElement, "gameId", gameId);
       });
 
-      expect(getInputValue(parent.baseElement, "gameId")).toEqual(
-          gameId
-      );
+      expect(getInputValue(parent.baseElement, "gameId")).toEqual(gameId);
 
       act(() => {
         fireEvent.click(gameIdInput);
       });
 
-      expect(getInputValue(parent.baseElement, "gameId")).toEqual(
-          gameId
-      );
+      expect(getInputValue(parent.baseElement, "gameId")).toEqual(gameId);
     });
   });
 
@@ -171,9 +191,12 @@ describe("Login", () => {
         });
       });
 
-      it("Creates a new game", async () => {
+      it("Creates a new game and changes gameId style class to inputted", async () => {
         await wait(() => {
           expect(getInputValue(parent.baseElement, "gameId")).toBe(NEW_GAME_ID);
+          expect(getInput(parent.baseElement, "gameId").className).toEqual(
+            "inputted"
+          );
         });
       });
 

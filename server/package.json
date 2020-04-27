@@ -13,7 +13,7 @@
     "test:unit": "jest src/unit/**/*.test.ts --maxWorkers=1",
     "posttest:unit": "npm run commit",
     "test:int": "jest src/int/**/*.test.ts --maxWorkers=1",
-    "serve:desktop": "nodemon ./src/main/index.ts",
+    "serve:desktop": "nodemon ./src/main/serveDesktop.ts",
     "commit": "git add -A; timestamp=$(date \"+%c\") && git commit -m \"Test and Commit @ $timestamp\" && git push"
   },
   "repository": {
