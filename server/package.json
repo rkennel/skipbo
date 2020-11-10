@@ -25,7 +25,7 @@
   "dependencies": {
     "@types/ws": "^7.2.4",
     "express": "^4.17.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "restify": "^8.5.1",
     "restify-cors-middleware": "^1.1.1",
