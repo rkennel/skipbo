@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/ws": "^7.2.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "restify": "^8.5.1",
